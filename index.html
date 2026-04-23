@@ -3,199 +3,311 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>KARMA Inspection</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<title>KARMA નિરીક્ષણ</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#1a1a2e;
+  --ink:#0f1923;
   --gold:#c9a84c;
-  --bg:#f4f1eb;
-  --green:#27ae60;
+  --gold2:#e8c96a;
+  --bg:#f5f2ec;
+  --card:#ffffff;
+  --green:#1e7e45;
+  --green2:#25a356;
   --red:#c0392b;
+  --red2:#e74c3c;
   --border:#ddd5c0;
   --muted:#888;
   --wa:#25D366;
+  --shadow:0 2px 12px rgba(0,0,0,0.08);
 }
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:rgba(0,0,0,0.1);}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:rgba(201,168,76,0.15);}
 html,body{height:100%;overscroll-behavior:none;}
-body{background:var(--bg);font-family:'Noto Sans Gujarati',sans-serif;color:var(--ink);padding-bottom:80px;-webkit-text-size-adjust:100%;}
+body{
+  background:var(--bg);
+  font-family:'Noto Sans Gujarati',sans-serif;
+  color:var(--ink);
+  -webkit-text-size-adjust:100%;
+}
 
-/* HEADER */
-.hdr{background:var(--ink);padding:13px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;color:var(--gold);}
-.hdr-sub{font-size:10px;color:#aaa;margin-top:1px;}
-.gear{background:none;border:1.5px solid #555;border-radius:8px;color:#aaa;font-size:18px;padding:8px 12px;cursor:pointer;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;-webkit-appearance:none;appearance:none;}
-.gear:active{background:#333;}
+/* ── HEADER ── */
+.hdr{
+  background:var(--ink);
+  padding:0 16px;
+  height:56px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+  box-shadow:0 2px 8px rgba(0,0,0,0.3);
+}
+.hdr-left{display:flex;align-items:center;gap:10px;}
+.logo-text{font-size:22px;font-weight:700;color:var(--gold);letter-spacing:3px;}
+.logo-sub{font-size:10px;color:#888;letter-spacing:1px;}
+.gear-btn{
+  background:none;border:1.5px solid #333;border-radius:8px;
+  color:#aaa;font-size:16px;padding:6px 10px;cursor:pointer;
+  min-width:40px;min-height:40px;display:flex;align-items:center;justify-content:center;
+}
+.gear-btn:active{background:#1a2530;}
 
-/* FORM PICKER */
-.picker{display:grid;grid-template-columns:1fr 1fr;background:var(--ink);border-top:1px solid #2a2a40;}
-.pick-btn{padding:14px 6px;text-align:center;cursor:pointer;border-bottom:4px solid transparent;-webkit-user-select:none;user-select:none;min-height:70px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;}
-.pick-btn:active{background:#22223a;}
-.pick-btn.active{border-bottom-color:var(--gold);}
-.pick-icon{font-size:24px;display:block;}
-.pick-en{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1px;color:#777;display:block;}
-.pick-gu{font-size:11px;color:#666;display:block;}
-.pick-btn.active .pick-en,.pick-btn.active .pick-gu{color:var(--gold);}
+/* ── FORM TYPE TABS ── */
+.tabs{
+  display:grid;grid-template-columns:1fr 1fr;
+  background:var(--ink);border-top:1px solid #1e2a35;
+}
+.tab{
+  padding:12px 8px;text-align:center;cursor:pointer;
+  border-bottom:3px solid transparent;
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  -webkit-user-select:none;user-select:none;
+}
+.tab:active{background:#1a2530;}
+.tab.active{border-bottom-color:var(--gold);}
+.tab-icon{font-size:20px;}
+.tab-label{font-size:13px;font-weight:600;color:#666;}
+.tab.active .tab-label{color:var(--gold);}
 
-/* PROPERTY BAR */
-.prop-bar{display:none;padding:12px;background:#fff;border-bottom:2px solid var(--gold);}
+/* ── PROGRESS BAR ── */
+.progress-wrap{background:var(--ink);padding:8px 16px 10px;}
+.progress-info{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.progress-title{font-size:12px;color:var(--gold);font-weight:600;letter-spacing:0.5px;}
+.progress-count{font-size:11px;color:#666;}
+.progress-bar{height:4px;background:#1e2a35;border-radius:4px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:4px;transition:width 0.4s ease;}
+
+/* ── PROPERTY BAR ── */
+.prop-bar{
+  background:var(--card);border-bottom:2px solid var(--gold);
+  padding:10px 14px;display:none;
+}
 .prop-bar.show{display:block;}
-.prop-bar label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px;}
-.prop-sel{width:100%;padding:12px 14px;border:2px solid var(--gold);border-radius:10px;font-size:16px;font-family:'Noto Sans Gujarati',sans-serif;background:#fffdf5;color:var(--ink);-webkit-appearance:none;appearance:none;cursor:pointer;}
+.prop-bar label{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;display:block;margin-bottom:6px;}
+.prop-sel{
+  width:100%;padding:10px 12px;border:2px solid var(--gold);border-radius:10px;
+  font-size:15px;font-family:'Noto Sans Gujarati',sans-serif;
+  background:#fffdf5;color:var(--ink);-webkit-appearance:none;appearance:none;cursor:pointer;
+}
 
-/* NO NUMBER BANNER */
-.no-num{background:#fff3cd;border:1.5px solid #f0a500;border-radius:10px;padding:14px;margin:14px 14px 0;font-size:13px;color:#7a5800;display:none;align-items:center;gap:10px;cursor:pointer;line-height:1.5;min-height:44px;}
-.no-num.show{display:flex;}
-.no-num:active{background:#ffe8a0;}
-
-/* SCREEN */
-.screen{display:none;padding:14px;}
+/* ── SCREEN / PAGE SYSTEM ── */
+.screen{display:none;padding:14px;padding-bottom:100px;}
 .screen.show{display:block;}
 
-/* INFO CARD */
-.info-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:14px;}
-.info-card h2{font-family:'Bebas Neue',sans-serif;font-size:17px;color:var(--gold);letter-spacing:2px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
-.info-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
-.info-row.one{grid-template-columns:1fr;}
-.flbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;}
-.flbl span{font-family:'Noto Sans Gujarati',sans-serif;font-weight:400;text-transform:none;letter-spacing:0;}
-input[type=text],input[type=date],input[type=time]{
-  width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;
-  font-size:15px;font-family:'Noto Sans Gujarati',sans-serif;background:var(--bg);
-  color:var(--ink);outline:none;-webkit-appearance:none;appearance:none;min-height:44px;
+/* ── INFO CARD (top of each page) ── */
+.info-strip{
+  background:var(--ink);border-radius:12px;padding:12px 14px;
+  margin-bottom:14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;
 }
-input:focus{border-color:var(--gold);background:#fff;}
+.info-chip{
+  background:#1a2530;border-radius:8px;padding:5px 10px;
+  font-size:12px;color:#ccc;display:flex;align-items:center;gap:5px;
+}
+.info-chip strong{color:var(--gold);}
 
-/* SECTION */
-.sec{background:#fff;border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;}
-.sec-hdr{background:var(--ink);padding:10px 14px;}
-.sec-hdr-en{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;color:var(--gold);}
-.sec-hdr-gu{font-size:11px;color:#aaa;margin-top:1px;}
+/* ── SECTION CARD ── */
+.sec-card{
+  background:var(--card);border-radius:14px;overflow:hidden;
+  box-shadow:var(--shadow);margin-bottom:14px;
+}
+.sec-hdr{
+  background:var(--ink);padding:11px 14px;
+  display:flex;align-items:center;gap:8px;
+}
+.sec-hdr-icon{font-size:18px;}
+.sec-hdr-text{font-size:13px;font-weight:700;color:var(--gold);letter-spacing:1px;}
 
-/* QUESTION */
-.qrow{padding:13px 14px;border-bottom:1px solid #f0ece4;display:flex;align-items:flex-start;gap:10px;}
+/* ── QUESTION ROW ── */
+.qrow{
+  padding:14px;border-bottom:1px solid #f0ece4;
+}
 .qrow:last-child{border-bottom:none;}
-.qnum{font-size:11px;font-weight:700;color:var(--gold);min-width:22px;padding-top:3px;}
-.qbody{flex:1;}
-.qen{font-size:13px;font-weight:600;line-height:1.4;color:var(--ink);}
-.qgu{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.4;}
-.yn{display:flex;gap:8px;margin-top:10px;}
+.qrow.issue-flag{border-left:4px solid var(--red2);background:#fff8f8;}
+.qtxt{font-size:14px;font-weight:600;color:var(--ink);line-height:1.5;margin-bottom:10px;}
+
+/* ── YES / NO BUTTONS ── */
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .yn-btn{
-  flex:1;padding:14px 6px;border-radius:10px;border:2px solid var(--border);
-  font-size:15px;font-weight:700;cursor:pointer;background:#f9f9f9;color:var(--muted);
-  font-family:'Noto Sans Gujarati',sans-serif;text-align:center;line-height:1.3;
-  min-height:52px;-webkit-appearance:none;appearance:none;
-  transition:background 0.15s,border-color 0.15s,color 0.15s;
-  display:flex;align-items:center;justify-content:center;gap:4px;
-}
-.yn-btn:active{opacity:0.7;}
-.yn-btn.yes.sel{background:var(--green);border-color:var(--green);color:#fff;}
-.yn-btn.no.sel{background:var(--red);border-color:var(--red);color:#fff;}
-.rmk{
-  margin-top:8px;width:100%;padding:10px 12px;border:1.5px dashed var(--border);
-  border-radius:8px;font-size:13px;font-family:'Noto Sans Gujarati',sans-serif;
-  background:#fafaf7;color:var(--ink);outline:none;resize:none;min-height:54px;
+  padding:14px 8px;border-radius:10px;border:2px solid var(--border);
+  font-size:16px;font-weight:700;cursor:pointer;
+  background:#fafaf7;color:#aaa;
+  font-family:'Noto Sans Gujarati',sans-serif;
+  text-align:center;min-height:52px;
   -webkit-appearance:none;appearance:none;
+  transition:all 0.15s;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.yn-btn:active{transform:scale(0.96);}
+.yn-btn.yes.sel{background:var(--green);border-color:var(--green);color:#fff;box-shadow:0 3px 10px rgba(30,126,69,0.3);}
+.yn-btn.no.sel{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 3px 10px rgba(192,57,43,0.3);}
+
+/* ── PHOTO REQUIRED BANNER ── */
+.photo-required{
+  display:none;margin-top:10px;background:#fff3f3;
+  border:1.5px solid var(--red2);border-radius:8px;
+  padding:9px 12px;font-size:12px;color:var(--red);
+  font-weight:600;line-height:1.5;
+}
+.photo-required.show{display:block;}
+
+/* ── REMARK BOX ── */
+.rmk{
+  margin-top:10px;width:100%;padding:10px 12px;
+  border:1.5px dashed var(--border);border-radius:8px;
+  font-size:13px;font-family:'Noto Sans Gujarati',sans-serif;
+  background:#fafaf7;color:var(--ink);outline:none;resize:none;min-height:52px;
+  -webkit-appearance:none;
 }
 .rmk:focus{border-color:var(--gold);border-style:solid;background:#fff;}
 
-/* PHOTO */
-.photo-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:14px;}
-.photo-card h3{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1.5px;margin-bottom:4px;}
-.photo-card p{font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.5;}
+/* ── PHOTO SECTION ── */
+.photo-card{
+  background:var(--card);border-radius:14px;overflow:hidden;
+  box-shadow:var(--shadow);margin-bottom:14px;
+}
+.photo-card-hdr{background:var(--ink);padding:11px 14px;display:flex;align-items:center;gap:8px;}
+.photo-card-hdr-text{font-size:13px;font-weight:700;color:var(--gold);}
+.photo-body{padding:14px;}
 .photo-lbl{
-  display:flex;width:100%;padding:18px;background:var(--bg);border:2px dashed var(--gold);
-  border-radius:10px;text-align:center;cursor:pointer;font-size:14px;font-weight:700;
-  color:var(--gold);align-items:center;justify-content:center;gap:10px;
-  min-height:60px;-webkit-user-select:none;user-select:none;
+  display:flex;width:100%;padding:16px;
+  background:var(--bg);border:2px dashed var(--gold);border-radius:10px;
+  cursor:pointer;font-size:14px;font-weight:700;color:var(--gold);
+  align-items:center;justify-content:center;gap:10px;min-height:58px;
+  -webkit-user-select:none;
 }
 .photo-lbl:active{background:#f0e8cc;}
-.photo-lbl .ic{font-size:28px;}
+.photo-lbl-icon{font-size:26px;}
 .thumbs{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
 .tw{position:relative;}
-.th{width:80px;height:80px;object-fit:cover;border-radius:8px;border:2px solid var(--border);}
+.th{width:76px;height:76px;object-fit:cover;border-radius:8px;border:2px solid var(--border);}
 .tdel{
-  position:absolute;top:-8px;right:-8px;background:var(--red);color:#fff;border:none;
-  border-radius:50%;width:24px;height:24px;font-size:13px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;font-weight:700;
+  position:absolute;top:-8px;right:-8px;background:var(--red);color:#fff;
+  border:none;border-radius:50%;width:22px;height:22px;font-size:12px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;
 }
-.tdel:active{opacity:0.7;}
-.photo-note{background:#e8f8f0;border:1px solid var(--green);border-radius:8px;padding:10px 12px;font-size:11px;color:#1a6b3a;margin-top:10px;line-height:1.6;}
+.photo-hint{margin-top:10px;font-size:11px;color:var(--muted);line-height:1.6;background:#e8f8f0;border-radius:8px;padding:8px 11px;border:1px solid #b2dfcb;}
 
-/* SEND */
-.send-wrap{padding:0 14px 20px;}
-.send-btn{
-  width:100%;padding:18px;background:var(--wa);color:#fff;border:none;border-radius:14px;
-  font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;
-  justify-content:center;gap:12px;box-shadow:0 4px 18px rgba(37,211,102,.4);
-  font-family:'Noto Sans Gujarati',sans-serif;line-height:1.3;min-height:60px;
-  -webkit-appearance:none;appearance:none;
+/* ── OVERALL REMARK ── */
+.overall-card{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:14px;}
+.overall-hdr{background:var(--ink);padding:11px 14px;}
+.overall-hdr-text{font-size:13px;font-weight:700;color:var(--gold);}
+.overall-body{padding:14px;}
+
+/* ── NAVIGATION BUTTONS ── */
+.nav-wrap{
+  position:fixed;bottom:0;left:0;right:0;
+  background:var(--card);border-top:1px solid var(--border);
+  padding:10px 14px;display:flex;gap:10px;
+  box-shadow:0 -4px 12px rgba(0,0,0,0.08);z-index:50;
 }
-.send-btn:active{opacity:.8;transform:scale(0.98);}
-.send-hint{text-align:center;font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5;}
-.wa-svg{width:26px;height:26px;fill:white;flex-shrink:0;}
+.nav-btn{
+  flex:1;padding:14px;border-radius:12px;border:none;
+  font-size:15px;font-weight:700;cursor:pointer;
+  font-family:'Noto Sans Gujarati',sans-serif;
+  min-height:52px;-webkit-appearance:none;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  transition:all 0.15s;
+}
+.nav-btn:active{transform:scale(0.97);}
+.btn-prev{background:#f0ece4;color:var(--ink);}
+.btn-next{background:var(--ink);color:var(--gold);flex:2;}
+.btn-send{background:var(--wa);color:#fff;flex:2;box-shadow:0 4px 16px rgba(37,211,102,0.35);}
+.btn-send:active{opacity:0.85;}
+.wa-svg{width:22px;height:22px;fill:white;flex-shrink:0;}
 
-/* SETTINGS OVERLAY */
+/* ── SETTINGS OVERLAY ── */
 .overlay{
-  display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);
-  z-index:9999;align-items:center;justify-content:center;padding:20px;
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);
+  z-index:999;align-items:center;justify-content:center;padding:20px;
 }
 .overlay.open{display:flex;}
-.sbox{background:#fff;border-radius:16px;width:100%;max-width:380px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);}
-.sbox-hdr{background:var(--ink);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;}
-.sbox-hdr h2{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);letter-spacing:2px;}
-.sclose{background:none;border:none;color:#aaa;font-size:24px;cursor:pointer;padding:4px 8px;line-height:1;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;}
-.sclose:active{color:#fff;}
-.sbody{padding:20px;}
-.sbody p{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6;}
-.slbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px;}
+.sbox{background:var(--card);border-radius:16px;width:100%;max-width:360px;overflow:hidden;}
+.sbox-hdr{background:var(--ink);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;}
+.sbox-title{font-size:16px;font-weight:700;color:var(--gold);}
+.sclose{background:none;border:none;color:#aaa;font-size:22px;cursor:pointer;min-width:40px;min-height:40px;display:flex;align-items:center;justify-content:center;}
+.sbody{padding:18px;}
+.sbody p{font-size:13px;color:var(--muted);margin-bottom:12px;line-height:1.6;}
+.slbl{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px;display:block;margin-bottom:6px;}
 .sinput{
-  width:100%;padding:14px;border:2px solid var(--border);border-radius:10px;
-  font-size:18px;font-family:'Noto Sans Gujarati',sans-serif;color:var(--ink);
-  outline:none;letter-spacing:2px;min-height:54px;-webkit-appearance:none;appearance:none;
+  width:100%;padding:12px 14px;border:2px solid var(--border);border-radius:10px;
+  font-size:17px;color:var(--ink);outline:none;letter-spacing:1px;
+  -webkit-appearance:none;min-height:50px;
+  font-family:'Noto Sans Gujarati',sans-serif;
 }
-.sinput:focus{border-color:var(--gold);background:#fffdf5;}
-.shint{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5;}
+.sinput:focus{border-color:var(--gold);}
+.shint{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.5;}
 .ssave{
-  width:100%;margin-top:16px;padding:16px;background:var(--ink);color:var(--gold);
-  border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;
-  font-family:'Bebas Neue',sans-serif;letter-spacing:2px;min-height:54px;
-  -webkit-appearance:none;appearance:none;
+  width:100%;margin-top:14px;padding:14px;background:var(--ink);color:var(--gold);
+  border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;
+  font-family:'Noto Sans Gujarati',sans-serif;min-height:50px;-webkit-appearance:none;
 }
 .ssave:active{opacity:0.8;}
-.ssaved{display:none;text-align:center;color:var(--green);font-size:14px;font-weight:700;margin-top:12px;}
-.cur-num{background:#e8f0ff;border-radius:8px;padding:10px 12px;font-size:13px;color:#334;margin-bottom:12px;display:none;line-height:1.5;}
-.cur-num.show{display:block;}
+.ssaved{display:none;text-align:center;color:var(--green);font-weight:700;margin-top:10px;font-size:13px;}
+
+/* ── NO NUMBER BANNER ── */
+.no-num{
+  background:#fff3cd;border:1.5px solid #f0a500;border-radius:10px;
+  padding:12px 14px;margin:12px 14px 0;font-size:13px;color:#7a5800;
+  display:none;align-items:center;gap:10px;cursor:pointer;line-height:1.5;
+}
+.no-num.show{display:flex;}
+.no-num:active{background:#ffe8a0;}
+
+/* ── SUMMARY PAGE ── */
+.summary-card{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:12px;}
+.summary-hdr{background:var(--ink);padding:10px 14px;}
+.summary-hdr-text{font-size:12px;font-weight:700;color:var(--gold);letter-spacing:1px;}
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #f0ece4;font-size:13px;}
+.summary-row:last-child{border-bottom:none;}
+.summary-q{flex:1;color:#555;line-height:1.4;}
+.summary-a{font-weight:700;min-width:50px;text-align:right;}
+.summary-a.yes{color:var(--green);}
+.summary-a.no{color:var(--red);}
+.summary-a.blank{color:#ccc;}
+
+/* ── SHEET STORAGE STATUS ── */
+.storage-status{
+  background:#e8f8f0;border:1px solid #b2dfcb;border-radius:10px;
+  padding:10px 14px;margin-bottom:12px;font-size:12px;color:#1a6b3a;
+  display:flex;align-items:center;gap:8px;line-height:1.5;
+}
+.storage-status.error{background:#fff3f3;border-color:var(--red2);color:var(--red);}
 </style>
 </head>
 <body>
 
 <!-- HEADER -->
 <div class="hdr">
-  <div>
-    <div class="logo">KARMA</div>
-    <div class="hdr-sub">Weekly Inspection · સાપ્તાહિક નિરીક્ષણ</div>
+  <div class="hdr-left">
+    <div>
+      <div class="logo-text">KARMA</div>
+      <div class="logo-sub">સાપ્તાહિક નિરીક્ષણ</div>
+    </div>
   </div>
-  <button class="gear" id="gear-btn">⚙️</button>
+  <button class="gear-btn" id="gear-btn">⚙️</button>
 </div>
 
-<!-- FORM PICKER -->
-<div class="picker">
-  <div class="pick-btn active" id="pick-land">
-    <span class="pick-icon">🏗</span>
-    <span class="pick-en">LAND FORM</span>
-    <span class="pick-gu">જમીન ફોર્મ</span>
+<!-- FORM TYPE TABS -->
+<div class="tabs">
+  <div class="tab active" id="tab-land">
+    <span class="tab-icon">🏗</span>
+    <span class="tab-label">જમીન ફોર્મ</span>
   </div>
-  <div class="pick-btn" id="pick-prop">
-    <span class="pick-icon">🏢</span>
-    <span class="pick-en">PROPERTY FORM</span>
-    <span class="pick-gu">પ્રોપર્ટી ફોર્મ</span>
+  <div class="tab" id="tab-prop">
+    <span class="tab-icon">🏢</span>
+    <span class="tab-label">પ્રોપર્ટી ફોર્મ</span>
   </div>
+</div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-wrap">
+  <div class="progress-info">
+    <span class="progress-title" id="prog-title">સીમા &amp; ઘૂસણ</span>
+    <span class="progress-count" id="prog-count">પૃષ્ઠ 1 / 6</span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:16%"></div></div>
 </div>
 
 <!-- PROPERTY SELECTOR -->
 <div class="prop-bar" id="prop-bar">
-  <label>પ્રોપર્ટી પસંદ કરો · Select Property</label>
+  <label>પ્રોપર્ટી પસંદ કરો</label>
   <select class="prop-sel" id="prop-sel">
     <option value="0">1. GIFT City – ગાંધીનગર</option>
     <option value="1">2. Sargasan – ગાંધીનગર</option>
@@ -206,539 +318,654 @@ input:focus{border-color:var(--gold);background:#fff;}
 </div>
 
 <!-- NO NUMBER BANNER -->
-<div class="no-num" id="no-num">
-  ⚠️ Director નો WhatsApp number સેટ નથી — અહીં tap કરો · No director number — tap here
+<div class="no-num" id="no-num">⚠️ Director નો WhatsApp number સેટ નથી — અહીં tap કરો</div>
+
+<!-- ══════════════════════════════════════════
+     LAND FORM PAGES
+══════════════════════════════════════════ -->
+
+<!-- LAND PAGE 1: સીમા & ઘૂસણ -->
+<div class="screen show" id="lp1">
+  <div class="info-strip">
+    <div class="info-chip">👤 <strong>Vikram</strong></div>
+    <div class="info-chip">📅 <strong id="l-date-disp"></strong></div>
+    <div class="info-chip">⏰ <strong id="l-time-disp"></strong></div>
+  </div>
+  <div class="sec-card">
+    <div class="sec-hdr"><span class="sec-hdr-icon">🔒</span><span class="sec-hdr-text">સીમા &amp; ઘૂસણ</span></div>
+    <div class="qrow" id="lq0-row">
+      <div class="qtxt">૧. ચારેય બાજુ ફેન્સ / સીમા સંપૂર્ણ સલામત છે?</div>
+      <div class="yn">
+        <button class="yn-btn yes" data-form="L" data-qi="0" data-val="yes">✅ હા</button>
+        <button class="yn-btn no" data-form="L" data-qi="0" data-val="no">❌ ના</button>
+      </div>
+      <div class="photo-required" id="lq0-photo">📸 ફોટો ફરજિયાત — ખામી હોય ત્યારે ફોટો લો</div>
+      <textarea class="rmk" placeholder="નોંધ..." data-form="L" data-qi="0"></textarea>
+    </div>
+    <div class="qrow" id="lq1-row">
+      <div class="qtxt">૨. કોઈએ ફેન્સ / સીમા અમારી જમીન તરફ ખસેડી?</div>
+      <div class="yn">
+        <button class="yn-btn yes" data-form="L" data-qi="1" data-val="yes">✅ હા</button>
+        <button class="yn-btn no" data-form="L" data-qi="1" data-val="no">❌ ના</button>
+      </div>
+      <div class="photo-required" id="lq1-photo">📸 ફોટો ફરજિયાત — ઘૂસણ હોય ત્યારે ફોટો લો</div>
+      <textarea class="rmk" placeholder="નોંધ..." data-form="L" data-qi="1"></textarea>
+    </div>
+    <div class="qrow" id="lq2-row">
+      <div class="qtxt">૩. ગેટ / એન્ટ્રી પોઈન્ટ સુરક્ષિત અને લૉક?</div>
+      <div class="yn">
+        <button class="yn-btn yes" data-form="L" data-qi="2" data-val="yes">✅ હા</button>
+        <button class="yn-btn no" data-form="L" data-qi="2" data-val="no">❌ ના</button>
+      </div>
+      <div class="photo-required" id="lq2-photo">📸 ફોટો ફરજિયાત — ગેટ ખુલ્લો હોય ત્યારે ફોટો લો</div>
+      <textarea class="rmk" placeholder="નોંધ..." data-form="L" data-qi="2"></textarea>
+    </div>
+    <div class="qrow" id="lq3-row">
+      <div class="qtxt">૪. સીમા સાથે ચેડા / શંકાસ્પદ પ્રવૃત્તિ?</div>
+      <div class="yn">
+        <button class="yn-btn yes" data-form="L" data-qi="3" data-val="yes">✅ હા</button>
+        <button class="yn-btn no" data-form="L" data-qi="3" data-val="no">❌ ના</button>
+      </div>
+      <div class="photo-required" id="lq3-photo">📸 ફોટો ફરજિયાત — ચેડા દેખાય ત્યારે ફોટો લો</div>
+      <textarea class="rmk" placeholder="નોંધ..." data-form="L" data-qi="3"></textarea>
+    </div>
+  </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     LAND FORM
-══════════════════════════════════════ -->
-<div class="screen show" id="screen-land">
-
-  <div class="info-card">
-    <h2>SITE INFO · સાઇટ માહિતી</h2>
-    <div class="info-row">
-      <div><div class="flbl">Site Name <span>· સાઇટ નામ</span></div><input type="text" id="l-site" placeholder="Site name · સાઇટ"></div>
-      <div><div class="flbl">Officer <span>· નામ</span></div><input type="text" id="l-name" placeholder="Your name · નામ"></div>
+<!-- LAND PAGE 2: ભૂમિ સ્થિતિ & એક્સેસ -->
+<div class="screen" id="lp2">
+  <div class="info-strip">
+    <div class="info-chip">👤 <strong>Vikram</strong></div>
+    <div class="info-chip">📅 <strong id="l-date-disp2"></strong></div>
+    <div class="info-chip">⏰ <strong id="l-time-disp2"></strong></div>
+  </div>
+  <div class="sec-card">
+    <div class="sec-hdr"><span class="sec-hdr-icon">🌱</span><span class="sec-hdr-text">ભૂમિ સ્થિતિ</span></div>
+    <div class="qrow" id="lq4-row">
+      <div class="qtxt">૫. જમીન સ્વચ્છ અને સમાન? (કચરો / ખાડો / પાણી ભરાવ નથી?)</div>
+      <div class="yn">
+        <button class="yn-btn yes" data-form="L" data-qi="4" data-val="yes">✅ હા</button>
+        <button class="yn-btn no" data-form="L" data-qi="4" data-val="no">❌ ના</button>
+      </div>
+      <div class="photo-required" id="lq4-photo">📸 ફોટો ફરજિયાત — સ્થિતિ ખરાબ હોય ત્યારે ફોટો લો</div>
+      <textarea class="rmk" placeholder="નોંધ..." data-form="L" data-qi="4"></textarea>
     </div>
-    <div class="info-row">
-      <div><div class="flbl">Date <span>· તારીખ</span></div><input type="date" id="l-date"></div>
-      <div><div class="flbl">Time In <span>· સમય</span></div><input type="time" id="l-tin"></div>
+    <div class="qrow" id="lq5-row">
+      <div class="qtxt">૬. જમીન પર કોઈ નવી ગતિવિધી / બદલાવ?</div>
+      <div class="yn">
+        <button class="yn-btn yes" data-form="L" data-qi="5" data-val="yes">✅ હા</button>
+        <button class="yn-btn no" data-form="L" data-qi="5" data-val="no">❌ ના</button>
+      </div>
+      <div class="photo-required" id="lq5-photo">📸 ફોટો ફરજિયાત — બદલાવ દેખાય ત્યારે ફોટો લો</div>
+      <textarea class="rmk" placeholder="નોંધ..." data-form="L" data-qi="5"></textarea>
     </div>
-    <div class="info-row one">
-      <div><div class="flbl">Time Out <span>· સમય Out</span></div><input type="time" id="l-tout"></div>
+  </div>
+  <div class="sec-card">
+    <div class="sec-hdr"><span class="sec-hdr-icon">🚗</span><span class="sec-hdr-text">એક્સેસ</span></div>
+    <div class="qrow" id="lq6-row">
+      <div class="qtxt">૭. મુખ્ય રસ્તેથી જમીન સુધીનો પ્રવેશ ખુલ્લો?</div>
+      <div class="yn">
+        <button class="yn-btn yes" data-form="L" data-qi="6" data-val="yes">✅ હા</button>
+        <button class="yn-btn no" data-form="L" data-qi="6" data-val="no">❌ ના</button>
+      </div>
+      <div class="photo-required" id="lq6-photo">📸 ફોટો ફરજિયાત — પ્રવેશ બંધ હોય ત્યારે ફોટો લો</div>
+    </div>
+    <div class="qrow" id="lq7-row">
+      <div class="qtxt">૮. ગેટ / એન્ટ્રી સારી હાલતમાં?</div>
+      <div class="yn">
+        <button class="yn-btn yes" data-form="L" data-qi="7" data-val="yes">✅ હા</button>
+        <button class="yn-btn no" data-form="L" data-qi="7" data-val="no">❌ ના</button>
+      </div>
+      <div class="photo-required" id="lq7-photo">📸 ફોટો ફરજિયાત — ખામી હોય ત્યારે ફોટો લો</div>
     </div>
   </div>
+</div>
 
-  <div class="sec">
-    <div class="sec-hdr"><div class="sec-hdr-en">BOUNDARY &amp; ENCROACHMENT</div><div class="sec-hdr-gu">સીમા &amp; ઘૂસણ</div></div>
-    <div class="qrow"><div class="qnum">1</div><div class="qbody">
-      <div class="qen">Are all 4 boundary fences fully secure?</div>
-      <div class="qgu">ચારેય બાજુ ફેન્સ / સીમા સંપૂર્ણ સલામત છે?</div>
-      <div class="yn"><button class="yn-btn yes" data-form="L" data-qi="0" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="L" data-qi="0" data-val="no">❌ ના</button></div>
-      <textarea class="rmk" placeholder="Remark · નોંધ..." data-form="L" data-qi="0"></textarea>
-    </div></div>
-    <div class="qrow"><div class="qnum">2</div><div class="qbody">
-      <div class="qen">Has anyone shifted fence into our land?</div>
-      <div class="qgu">કોઈએ પોતાની ફેન્સ / સીમા અમારી જમીન તરફ ખસેડી?</div>
-      <div class="yn"><button class="yn-btn yes" data-form="L" data-qi="1" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="L" data-qi="1" data-val="no">❌ ના</button></div>
-      <textarea class="rmk" placeholder="Remark · નોંધ..." data-form="L" data-qi="1"></textarea>
-    </div></div>
-    <div class="qrow"><div class="qnum">3</div><div class="qbody">
-      <div class="qen">Is gate / entry point secure and locked?</div>
-      <div class="qgu">ગેટ / એન્ટ્રી પોઈન્ટ સુરક્ષિત અને લૉક?</div>
-      <div class="yn"><button class="yn-btn yes" data-form="L" data-qi="2" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="L" data-qi="2" data-val="no">❌ ના</button></div>
-      <textarea class="rmk" placeholder="Remark · નોંધ..." data-form="L" data-qi="2"></textarea>
-    </div></div>
-    <div class="qrow"><div class="qnum">4</div><div class="qbody">
-      <div class="qen">Any tampering / suspicious activity at boundary?</div>
-      <div class="qgu">સીમા સાથે ચેડા / શંકાસ્પદ પ્રવૃત્તિ?</div>
-      <div class="yn"><button class="yn-btn yes" data-form="L" data-qi="3" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="L" data-qi="3" data-val="no">❌ ના</button></div>
-      <textarea class="rmk" placeholder="Remark · નોંધ..." data-form="L" data-qi="3"></textarea>
-    </div></div>
+<!-- LAND PAGE 3: બોર્ડ & ઉપયોગિતા -->
+<div class="screen" id="lp3">
+  <div class="info-strip">
+    <div class="info-chip">👤 <strong>Vikram</strong></div>
+    <div class="info-chip">📅 <strong id="l-date-disp3"></strong></div>
   </div>
-
-  <div class="sec">
-    <div class="sec-hdr"><div class="sec-hdr-en">LAND CONDITION</div><div class="sec-hdr-gu">ભૂમિ સ્થિતિ</div></div>
-    <div class="qrow"><div class="qnum">5</div><div class="qbody">
-      <div class="qen">Is land clean and level? (No garbage / pit / waterlogging?)</div>
-      <div class="qgu">જમીન સ્વચ્છ અને સમાન? (કચરો / ખાડો / પાણી ભરાવ નથી?)</div>
-      <div class="yn"><button class="yn-btn yes" data-form="L" data-qi="4" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="L" data-qi="4" data-val="no">❌ ના</button></div>
-      <textarea class="rmk" placeholder="Remark · નોંધ..." data-form="L" data-qi="4"></textarea>
-    </div></div>
-    <div class="qrow"><div class="qnum">6</div><div class="qbody">
-      <div class="qen">Any new activity / changes visible on land?</div>
-      <div class="qgu">જમીન પર કોઈ નવી ગતિવિધી / બદલાવ?</div>
-      <div class="yn"><button class="yn-btn yes" data-form="L" data-qi="5" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="L" data-qi="5" data-val="no">❌ ના</button></div>
-      <textarea class="rmk" placeholder="Remark · નોંધ..." data-form="L" data-qi="5"></textarea>
-    </div></div>
+  <div class="sec-card">
+    <div class="sec-hdr"><span class="sec-hdr-icon">📋</span><span class="sec-hdr-text">બોર્ડ / સાઈન</span></div>
+    <div class="qrow">
+      <div class="qtxt">૯. જાહેર નોટિસ બોર્ડ હાજર?</div>
+      <div class="yn">
+        <button class="yn-btn yes" data-form="L" data-qi="8" data-val="yes">✅ હા</button>
+        <button class="yn-btn no" data-form="L" data-qi="8" data-val="no">❌ ના</button>
+      </div>
+      <textarea class="rmk" placeholder="કેટલા બોર્ડ? સંખ્યા લખો..." data-form="L" data-qi="8"></textarea>
+    </div>
+    <div class="qrow">
+      <div class="qtxt">૧૦. બધા બોર્ડ સ્પષ્ટ, સ્વચ્છ, ઠીક?</div>
+      <div class="yn">
+        <button class="yn-btn yes" data-form="L" data-qi="9" data-val="yes">✅ હા</button>
+        <button class="yn-btn no" data-form="L" data-qi="9" data-val="no">❌ ના</button>
+      </div>
+    </div>
   </div>
-
-  <div class="sec">
-    <div class="sec-hdr"><div class="sec-hdr-en">ACCESS</div><div class="sec-hdr-gu">એક્સેસ</div></div>
-    <div class="qrow"><div class="qnum">7</div><div class="qbody">
-      <div class="qen">Is access from main road open and easy?</div>
-      <div class="qgu">મુખ્ય રસ્તેથી જમીન સુધીનો પ્રવેશ ખુલ્લો?</div>
-      <div class="yn"><button class="yn-btn yes" data-form="L" data-qi="6" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="L" data-qi="6" data-val="no">❌ ના</button></div>
-    </div></div>
-    <div class="qrow"><div class="qnum">8</div><div class="qbody">
-      <div class="qen">Is gate / entry in good condition?</div>
-      <div class="qgu">ગેટ / એન્ટ્રી સારી હાલતમાં? (લૉક તૂટ્યું / ખુલ્લું નથી?)</div>
-      <div class="yn"><button class="yn-btn yes" data-form="L" data-qi="7" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="L" data-qi="7" data-val="no">❌ ના</button></div>
-    </div></div>
+  <div class="sec-card">
+    <div class="sec-hdr"><span class="sec-hdr-icon">💡</span><span class="sec-hdr-text">ઉપયોગિતા</span></div>
+    <div class="qrow" id="lq10-row">
+      <div class="qtxt">૧૧. લાઈટ / વીજળી ચાલુ?</div>
+      <div class="yn">
+        <button class="yn-btn yes" data-form="L" data-qi="10" data-val="yes">✅ હા</button>
+        <button class="yn-btn no" data-form="L" data-qi="10" data-val="no">❌ ના</button>
+      </div>
+      <div class="photo-required" id="lq10-photo">📸 ફોટો ફરજિયાત — લાઈટ બંધ હોય ત્યારે ફોટો લો</div>
+    </div>
+    <div class="qrow">
+      <div class="qtxt">૧૨. પાણી ઉપલબ્ધ?</div>
+      <div class="yn">
+        <button class="yn-btn yes" data-form="L" data-qi="11" data-val="yes">✅ હા</button>
+        <button class="yn-btn no" data-form="L" data-qi="11" data-val="no">❌ ના</button>
+      </div>
+    </div>
+    <div class="qrow" id="lq12-row">
+      <div class="qtxt">૧૩. ડ્રેનેજ / પ્લમ્બિંગ ઠીક?</div>
+      <div class="yn">
+        <button class="yn-btn yes" data-form="L" data-qi="12" data-val="yes">✅ હા</button>
+        <button class="yn-btn no" data-form="L" data-qi="12" data-val="no">❌ ના</button>
+      </div>
+      <div class="photo-required" id="lq12-photo">📸 ફોટો ફરજિયાત — ખામી હોય ત્યારે ફોટો લો</div>
+      <textarea class="rmk" placeholder="નોંધ..." data-form="L" data-qi="12"></textarea>
+    </div>
+    <div class="qrow">
+      <div class="qtxt">૧૪. વૉશરૂમ સ્વચ્છ?</div>
+      <div class="yn">
+        <button class="yn-btn yes" data-form="L" data-qi="13" data-val="yes">✅ હા</button>
+        <button class="yn-btn no" data-form="L" data-qi="13" data-val="no">❌ ના</button>
+      </div>
+    </div>
+    <div class="qrow">
+      <div class="qtxt">૧૫. સાઇટ સ્વચ્છ?</div>
+      <div class="yn">
+        <button class="yn-btn yes" data-form="L" data-qi="14" data-val="yes">✅ હા</button>
+        <button class="yn-btn no" data-form="L" data-qi="14" data-val="no">❌ ના</button>
+      </div>
+    </div>
+    <div class="qrow">
+      <div class="qtxt">૧૬. સિક્યુરિટી ગાર્ડ હાજર અને જવાબદાર?</div>
+      <div class="yn">
+        <button class="yn-btn yes" data-form="L" data-qi="15" data-val="yes">✅ હા</button>
+        <button class="yn-btn no" data-form="L" data-qi="15" data-val="no">❌ ના</button>
+      </div>
+      <textarea class="rmk" placeholder="નોંધ..." data-form="L" data-qi="15"></textarea>
+    </div>
   </div>
+</div>
 
-  <div class="sec">
-    <div class="sec-hdr"><div class="sec-hdr-en">SIGNAGE / BOARDS</div><div class="sec-hdr-gu">બોર્ડ / સાઈન</div></div>
-    <div class="qrow"><div class="qnum">9</div><div class="qbody">
-      <div class="qen">Is public notice board present? (Write count in remark)</div>
-      <div class="qgu">જાહેર નોટિસ બોર્ડ હાજર? (સંખ્યા નોંધ)</div>
-      <div class="yn"><button class="yn-btn yes" data-form="L" data-qi="8" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="L" data-qi="8" data-val="no">❌ ના</button></div>
-      <textarea class="rmk" placeholder="Board count · સંખ્યા..." data-form="L" data-qi="8"></textarea>
-    </div></div>
-    <div class="qrow"><div class="qnum">10</div><div class="qbody">
-      <div class="qen">Are all boards clear and in good condition?</div>
-      <div class="qgu">બધા બોર્ડ સ્પષ્ટ, સ્વચ્છ, ઠીક?</div>
-      <div class="yn"><button class="yn-btn yes" data-form="L" data-qi="9" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="L" data-qi="9" data-val="no">❌ ના</button></div>
-    </div></div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-hdr"><div class="sec-hdr-en">UTILITIES &amp; SITE ROOM</div><div class="sec-hdr-gu">સાઇટ રૂમ &amp; ઉપયોગિતા</div></div>
-    <div class="qrow"><div class="qnum">11</div><div class="qbody">
-      <div class="qen">Is electricity / lighting working?</div>
-      <div class="qgu">લાઈટ / વીજળી ચાલુ?</div>
-      <div class="yn"><button class="yn-btn yes" data-form="L" data-qi="10" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="L" data-qi="10" data-val="no">❌ ના</button></div>
-    </div></div>
-    <div class="qrow"><div class="qnum">12</div><div class="qbody">
-      <div class="qen">Is water available? (Borewell / tank)</div>
-      <div class="qgu">પાણી ઉપલબ્ધ? (બોરવેલ / ટાંકી)</div>
-      <div class="yn"><button class="yn-btn yes" data-form="L" data-qi="11" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="L" data-qi="11" data-val="no">❌ ના</button></div>
-    </div></div>
-    <div class="qrow"><div class="qnum">13</div><div class="qbody">
-      <div class="qen">No plumbing / drainage issues?</div>
-      <div class="qgu">ડ્રેનેજ / પ્લમ્બિંગ ઠીક?</div>
-      <div class="yn"><button class="yn-btn yes" data-form="L" data-qi="12" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="L" data-qi="12" data-val="no">❌ ના</button></div>
-      <textarea class="rmk" placeholder="Remark · નોંધ..." data-form="L" data-qi="12"></textarea>
-    </div></div>
-    <div class="qrow"><div class="qnum">14</div><div class="qbody">
-      <div class="qen">Is washroom clean and usable?</div>
-      <div class="qgu">વૉશરૂમ સ્વચ્છ?</div>
-      <div class="yn"><button class="yn-btn yes" data-form="L" data-qi="13" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="L" data-qi="13" data-val="no">❌ ના</button></div>
-    </div></div>
-    <div class="qrow"><div class="qnum">15</div><div class="qbody">
-      <div class="qen">Is the site clean?</div>
-      <div class="qgu">સાઇટ સ્વચ્છ?</div>
-      <div class="yn"><button class="yn-btn yes" data-form="L" data-qi="14" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="L" data-qi="14" data-val="no">❌ ના</button></div>
-    </div></div>
-    <div class="qrow"><div class="qnum">16</div><div class="qbody">
-      <div class="qen">Is security guard present and working responsibly?</div>
-      <div class="qgu">સિક્યુરિટી ગાર્ડ હાજર અને જવાબદાર?</div>
-      <div class="yn"><button class="yn-btn yes" data-form="L" data-qi="15" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="L" data-qi="15" data-val="no">❌ ના</button></div>
-      <textarea class="rmk" placeholder="Remark · નોંધ..." data-form="L" data-qi="15"></textarea>
-    </div></div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-hdr"><div class="sec-hdr-en">PHOTOS TAKEN?</div><div class="sec-hdr-gu">ફોટો લીધા?</div></div>
-    <div class="qrow"><div class="qnum">17</div><div class="qbody">
-      <div class="qen">4-corner photos and gate photo taken?</div>
-      <div class="qgu">ચારેય ખૂણા + ગેટ ના ફોટા?</div>
-      <div class="yn"><button class="yn-btn yes" data-form="L" data-qi="16" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="L" data-qi="16" data-val="no">❌ ના</button></div>
-    </div></div>
-    <div class="qrow"><div class="qnum">18</div><div class="qbody">
-      <div class="qen">Issue / problem photos taken? (if any)</div>
-      <div class="qgu">સમસ્યાના ફોટા? (જો હોય)</div>
-      <div class="yn"><button class="yn-btn yes" data-form="L" data-qi="17" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="L" data-qi="17" data-val="no">❌ ના</button></div>
-    </div></div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-hdr"><div class="sec-hdr-en">OVERALL REMARK</div><div class="sec-hdr-gu">એકંદર નોંધ</div></div>
-    <div class="qrow"><div class="qbody">
-      <textarea class="rmk" style="min-height:70px;" placeholder="Any extra notes · વધારાની નોંધ..." data-form="L" data-qi="99"></textarea>
-    </div></div>
-  </div>
-
+<!-- LAND PAGE 4: ફોટો -->
+<div class="screen" id="lp4">
   <div class="photo-card">
-    <h3>📸 ફોટા ઉમેરો · ATTACH PHOTOS</h3>
-    <p>ચારેય ખૂણા, ગેટ, ઘૂસણ / ખામી · 4 corners, gate, encroachment, issues</p>
-    <label class="photo-lbl" for="l-photos">
-      <span class="ic">📷</span>
-      <span>Tap to add photos · ફોટા ઉમેરો</span>
-    </label>
-    <input type="file" id="l-photos" accept="image/*" multiple capture="environment" style="display:none">
-    <div class="thumbs" id="l-thumbs"></div>
-    <div class="photo-note">📌 WhatsApp open થાય ત્યારે ફોટા manually attach કરો · When WhatsApp opens, attach photos manually in the same chat</div>
-  </div>
-
-  <div class="send-wrap">
-    <button class="send-btn" id="send-land-btn">
-      <svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.025.507 3.934 1.395 5.605L0 24l6.545-1.369A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.032-1.384l-.36-.214-3.733.98.998-3.648-.235-.374A9.786 9.786 0 012.182 12C2.182 6.573 6.573 2.182 12 2.182S21.818 6.573 21.818 12 17.427 21.818 12 21.818z"/></svg>
-      Director ને WhatsApp મોકલો
-    </button>
-    <div class="send-hint">WhatsApp ખુલશે — Send બટન દબાવો · WhatsApp will open — press Send</div>
-  </div>
-
-</div><!-- /screen-land -->
-
-
-<!-- ══════════════════════════════════════
-     PROPERTY FORM
-══════════════════════════════════════ -->
-<div class="screen" id="screen-prop">
-
-  <!-- Info cards — one per property -->
-  <div id="pi-0">
-    <div class="info-card"><h2>GIFT CITY · ગાંધીનગર</h2>
-      <div class="info-row">
-        <div><div class="flbl">Date <span>· તારીખ</span></div><input type="date" id="p0-date"></div>
-        <div><div class="flbl">Time <span>· સમય</span></div><input type="time" id="p0-time"></div>
-      </div>
-      <div class="info-row one"><div><div class="flbl">Officer <span>· નામ</span></div><input type="text" id="p0-name" placeholder="Your name · નામ"></div></div>
+    <div class="photo-card-hdr"><span class="photo-card-hdr-text">📸 ફોટા ઉમેરો</span></div>
+    <div class="photo-body">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:12px;line-height:1.6;">ચારેય ખૂણા, ગેટ, ઘૂસણ, ખામી — બધા ફોટા અહીં ઉમેરો</p>
+      <label class="photo-lbl" for="l-photos">
+        <span class="photo-lbl-icon">📷</span>
+        <span>ફોટા ઉમેરો</span>
+      </label>
+      <input type="file" id="l-photos" accept="image/*" multiple capture="environment" style="display:none">
+      <div class="thumbs" id="l-thumbs"></div>
+      <div class="photo-hint">📌 WhatsApp ખુલે ત્યારે ફોટા manually attach કરો</div>
     </div>
   </div>
-  <div id="pi-1" style="display:none">
-    <div class="info-card"><h2>SARGASAN · ગાંધીનગર</h2>
-      <div class="info-row">
-        <div><div class="flbl">Date <span>· તારીખ</span></div><input type="date" id="p1-date"></div>
-        <div><div class="flbl">Time <span>· સમય</span></div><input type="time" id="p1-time"></div>
-      </div>
-      <div class="info-row one"><div><div class="flbl">Officer <span>· નામ</span></div><input type="text" id="p1-name" placeholder="Your name · નામ"></div></div>
+  <div class="overall-card">
+    <div class="overall-hdr"><div class="overall-hdr-text">📝 એકંદર નોંધ</div></div>
+    <div class="overall-body">
+      <textarea class="rmk" style="min-height:80px;" placeholder="કોઈ વધારાની નોંધ..." data-form="L" data-qi="99"></textarea>
     </div>
   </div>
-  <div id="pi-2" style="display:none">
-    <div class="info-card"><h2>TARAPUR · તારાપુર</h2>
-      <div class="info-row">
-        <div><div class="flbl">Date <span>· તારીખ</span></div><input type="date" id="p2-date"></div>
-        <div><div class="flbl">Time <span>· સમય</span></div><input type="time" id="p2-time"></div>
-      </div>
-      <div class="info-row one"><div><div class="flbl">Officer <span>· નામ</span></div><input type="text" id="p2-name" placeholder="Your name · નામ"></div></div>
-    </div>
-  </div>
-  <div id="pi-3" style="display:none">
-    <div class="info-card"><h2>OGNAJ · અમદાવાદ ★ Site Room</h2>
-      <div class="info-row">
-        <div><div class="flbl">Date <span>· તારીખ</span></div><input type="date" id="p3-date"></div>
-        <div><div class="flbl">Time <span>· સમય</span></div><input type="time" id="p3-time"></div>
-      </div>
-      <div class="info-row one"><div><div class="flbl">Officer <span>· નામ</span></div><input type="text" id="p3-name" placeholder="Your name · નામ"></div></div>
-    </div>
-  </div>
-  <div id="pi-4" style="display:none">
-    <div class="info-card"><h2>SCIENCE CITY · અમદાવાદ ★ Site Room</h2>
-      <div class="info-row">
-        <div><div class="flbl">Date <span>· તારીખ</span></div><input type="date" id="p4-date"></div>
-        <div><div class="flbl">Time <span>· સમય</span></div><input type="time" id="p4-time"></div>
-      </div>
-      <div class="info-row one"><div><div class="flbl">Officer <span>· નામ</span></div><input type="text" id="p4-name" placeholder="Your name · નામ"></div></div>
-    </div>
-  </div>
+</div>
 
-  <div class="sec">
-    <div class="sec-hdr"><div class="sec-hdr-en">BOUNDARY &amp; ENCROACHMENT</div><div class="sec-hdr-gu">સીમા &amp; ઘૂસણ</div></div>
-    <div class="qrow"><div class="qnum">1</div><div class="qbody">
-      <div class="qen">Are all 4 boundary fences / walls intact?</div><div class="qgu">ચારેય સીમા / હાંસ ઠીક?</div>
+<!-- LAND PAGE 5: સારાંશ + Send -->
+<div class="screen" id="lp5">
+  <div id="l-summary-content"></div>
+  <div class="storage-status" id="l-storage-status" style="display:none"></div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PROPERTY FORM PAGES
+══════════════════════════════════════════ -->
+
+<!-- PROP PAGE 1: સીમા & ભૂમિ -->
+<div class="screen" id="pp1">
+  <div class="info-strip">
+    <div class="info-chip">👤 <strong>Vikram</strong></div>
+    <div class="info-chip">📅 <strong id="p-date-disp"></strong></div>
+    <div class="info-chip">⏰ <strong id="p-time-disp"></strong></div>
+  </div>
+  <div class="sec-card">
+    <div class="sec-hdr"><span class="sec-hdr-icon">🔒</span><span class="sec-hdr-text">સીમા &amp; ઘૂસણ</span></div>
+    <div class="qrow" id="pq0-row">
+      <div class="qtxt">૧. ચારેય સીમા / હાંસ ઠીક?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="0" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="0" data-val="no">❌ ના</button></div>
-      <textarea class="rmk" placeholder="Remark · નોંધ..." data-form="P" data-qi="0"></textarea>
-    </div></div>
-    <div class="qrow"><div class="qnum">2</div><div class="qbody">
-      <div class="qen">Any encroachment seen at boundary?</div><div class="qgu">ઘૂસણ જોયું? (સીમા સ્તરે)</div>
+      <div class="photo-required" id="pq0-photo">📸 ફોટો ફરજિયાત — ખામી હોય ત્યારે ફોટો લો</div>
+      <textarea class="rmk" placeholder="નોંધ..." data-form="P" data-qi="0"></textarea>
+    </div>
+    <div class="qrow" id="pq1-row">
+      <div class="qtxt">૨. ઘૂસણ જોયું?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="1" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="1" data-val="no">❌ ના</button></div>
-      <textarea class="rmk" placeholder="Remark · નોંધ..." data-form="P" data-qi="1"></textarea>
-    </div></div>
-    <div class="qrow"><div class="qnum">3</div><div class="qbody">
-      <div class="qen">Is any third party using land inside?</div><div class="qgu">ત્રીજો વ્યક્તિ જમીન વાપરી રહ્યો?</div>
+      <div class="photo-required" id="pq1-photo">📸 ફોટો ફરજિયાત — ઘૂસણ હોય ત્યારે ફોટો લો</div>
+      <textarea class="rmk" placeholder="નોંધ..." data-form="P" data-qi="1"></textarea>
+    </div>
+    <div class="qrow" id="pq2-row">
+      <div class="qtxt">૩. ત્રીજો વ્યક્તિ જમીન વાપરી રહ્યો?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="2" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="2" data-val="no">❌ ના</button></div>
-      <textarea class="rmk" placeholder="Remark · નોંધ..." data-form="P" data-qi="2"></textarea>
-    </div></div>
-    <div class="qrow"><div class="qnum">4</div><div class="qbody">
-      <div class="qen">Fence / compound wall OK?</div><div class="qgu">ફેન્સ / કમ્પાઉન્ડ વૉલ ઠીક?</div>
+      <div class="photo-required" id="pq2-photo">📸 ફોટો ફરજિયાત — ઘૂસણ હોય ત્યારે ફોટો લો</div>
+      <textarea class="rmk" placeholder="નોંધ..." data-form="P" data-qi="2"></textarea>
+    </div>
+    <div class="qrow" id="pq3-row">
+      <div class="qtxt">૪. ફેન્સ / કમ્પાઉન્ડ વૉલ ઠીક?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="3" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="3" data-val="no">❌ ના</button></div>
-    </div></div>
+      <div class="photo-required" id="pq3-photo">📸 ફોટો ફરજિયાત — ખામી હોય ત્યારે ફોટો લો</div>
+    </div>
   </div>
-
-  <div class="sec">
-    <div class="sec-hdr"><div class="sec-hdr-en">LAND CONDITION</div><div class="sec-hdr-gu">ભૂમિ સ્થિતિ</div></div>
-    <div class="qrow"><div class="qnum">5</div><div class="qbody">
-      <div class="qen">Any digging / damaged ground?</div><div class="qgu">ખોદકામ / ભ્રષ્ટ ભૂમિ?</div>
+  <div class="sec-card">
+    <div class="sec-hdr"><span class="sec-hdr-icon">🌱</span><span class="sec-hdr-text">ભૂમિ સ્થિતિ</span></div>
+    <div class="qrow" id="pq4-row">
+      <div class="qtxt">૫. ખોદકામ / ભ્રષ્ટ ભૂમિ?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="4" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="4" data-val="no">❌ ના</button></div>
-      <textarea class="rmk" placeholder="Remark · નોંધ..." data-form="P" data-qi="4"></textarea>
-    </div></div>
-    <div class="qrow"><div class="qnum">6</div><div class="qbody">
-      <div class="qen">Waterlogging / gutter / potholes?</div><div class="qgu">પાણી ભરાવ / ગટર / ખડ્ડો?</div>
+      <div class="photo-required" id="pq4-photo">📸 ફોટો ફરજિયાત — ખોદકામ દેખાય ત્યારે ફોટો લો</div>
+      <textarea class="rmk" placeholder="નોંધ..." data-form="P" data-qi="4"></textarea>
+    </div>
+    <div class="qrow" id="pq5-row">
+      <div class="qtxt">૬. પાણી ભરાવ / ગટર / ખડ્ડો?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="5" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="5" data-val="no">❌ ના</button></div>
-      <textarea class="rmk" placeholder="Remark · નોંધ..." data-form="P" data-qi="5"></textarea>
-    </div></div>
-    <div class="qrow"><div class="qnum">7</div><div class="qbody">
-      <div class="qen">Garbage / waste dumped?</div><div class="qgu">ગંદકી / કચરો?</div>
+      <div class="photo-required" id="pq5-photo">📸 ફોટો ફરજિયાત — સ્થિતિ ખરાબ હોય ત્યારે ફોટો લો</div>
+      <textarea class="rmk" placeholder="નોંધ..." data-form="P" data-qi="5"></textarea>
+    </div>
+    <div class="qrow">
+      <div class="qtxt">૭. ગંદકી / કચરો?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="6" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="6" data-val="no">❌ ના</button></div>
-    </div></div>
+    </div>
   </div>
+</div>
 
-  <div class="sec">
-    <div class="sec-hdr"><div class="sec-hdr-en">ACCESS &amp; SIGNAGE</div><div class="sec-hdr-gu">એક્સેસ &amp; બોર્ડ</div></div>
-    <div class="qrow"><div class="qnum">8</div><div class="qbody">
-      <div class="qen">Access from main road OK?</div><div class="qgu">મુખ્ય રસ્તેથી પ્રવેશ ઠીક?</div>
+<!-- PROP PAGE 2: એક્સેસ & બોર્ડ -->
+<div class="screen" id="pp2">
+  <div class="info-strip">
+    <div class="info-chip">👤 <strong>Vikram</strong></div>
+    <div class="info-chip">📅 <strong id="p-date-disp2"></strong></div>
+  </div>
+  <div class="sec-card">
+    <div class="sec-hdr"><span class="sec-hdr-icon">🚗</span><span class="sec-hdr-text">એક્સેસ &amp; બોર્ડ</span></div>
+    <div class="qrow">
+      <div class="qtxt">૮. મુખ્ય રસ્તેથી પ્રવેશ ઠીક?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="7" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="7" data-val="no">❌ ના</button></div>
-    </div></div>
-    <div class="qrow"><div class="qnum">9</div><div class="qbody">
-      <div class="qen">Gate / entry condition OK?</div><div class="qgu">ગેટ / એન્ટ્રી ઠીક?</div>
+    </div>
+    <div class="qrow">
+      <div class="qtxt">૯. ગેટ / એન્ટ્રી ઠીક?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="8" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="8" data-val="no">❌ ના</button></div>
-    </div></div>
-    <div class="qrow"><div class="qnum">10</div><div class="qbody">
-      <div class="qen">Notice board present? (Write count in remark)</div><div class="qgu">નોટિસ બોર્ડ? (સંખ્યા નોંધ)</div>
+    </div>
+    <div class="qrow">
+      <div class="qtxt">૧૦. નોટિસ બોર્ડ?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="9" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="9" data-val="no">❌ ના</button></div>
-      <textarea class="rmk" placeholder="Board count · સંખ્યા..." data-form="P" data-qi="9"></textarea>
-    </div></div>
-    <div class="qrow"><div class="qnum">11</div><div class="qbody">
-      <div class="qen">Boards clear, clean, not broken?</div><div class="qgu">બોર્ડ સ્પષ્ટ, સ્વચ્છ?</div>
+      <textarea class="rmk" placeholder="કેટલા બોર્ડ? સંખ્યા લખો..." data-form="P" data-qi="9"></textarea>
+    </div>
+    <div class="qrow">
+      <div class="qtxt">૧૧. બોર્ડ સ્પષ્ટ, સ્વચ્છ?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="10" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="10" data-val="no">❌ ના</button></div>
-    </div></div>
+    </div>
   </div>
-
-  <div class="sec">
-    <div class="sec-hdr"><div class="sec-hdr-en">UTILITIES &amp; SECURITY</div><div class="sec-hdr-gu">ઉપયોગિતા &amp; સિક્યુરિટી</div></div>
-    <div class="qrow"><div class="qnum">12</div><div class="qbody">
-      <div class="qen">Lights working? (if available)</div><div class="qgu">લાઈટ ચાલુ? (જો હોય)</div>
+  <div class="sec-card">
+    <div class="sec-hdr"><span class="sec-hdr-icon">💡</span><span class="sec-hdr-text">ઉપયોગિતા &amp; સિક્યુરિટી</span></div>
+    <div class="qrow" id="pq11-row">
+      <div class="qtxt">૧૨. લાઈટ ચાલુ?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="11" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="11" data-val="no">❌ ના</button></div>
-    </div></div>
-    <div class="qrow"><div class="qnum">13</div><div class="qbody">
-      <div class="qen">Plumbing / drain OK?</div><div class="qgu">ડ્રેઇન ઠીક?</div>
+      <div class="photo-required" id="pq11-photo">📸 ફોટો ફરજિયાત — લાઈટ બંધ હોય ત્યારે ફોટો લો</div>
+    </div>
+    <div class="qrow" id="pq12-row">
+      <div class="qtxt">૧૩. ડ્રેઇન ઠીક?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="12" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="12" data-val="no">❌ ના</button></div>
-      <textarea class="rmk" placeholder="Remark · નોંધ..." data-form="P" data-qi="12"></textarea>
-    </div></div>
-    <div class="qrow"><div class="qnum">14</div><div class="qbody">
-      <div class="qen">Fresh water available?</div><div class="qgu">પાણી ઉપલબ્ધ?</div>
+      <div class="photo-required" id="pq12-photo">📸 ફોટો ફરજિયાત — ખામી હોય ત્યારે ફોટો લો</div>
+      <textarea class="rmk" placeholder="નોંધ..." data-form="P" data-qi="12"></textarea>
+    </div>
+    <div class="qrow">
+      <div class="qtxt">૧૪. પાણી ઉપલબ્ધ?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="13" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="13" data-val="no">❌ ના</button></div>
-    </div></div>
-    <div class="qrow"><div class="qnum">15</div><div class="qbody">
-      <div class="qen">Security guard present?</div><div class="qgu">ગાર્ડ હાજર?</div>
+    </div>
+    <div class="qrow">
+      <div class="qtxt">૧૫. ગાર્ડ હાજર?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="14" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="14" data-val="no">❌ ના</button></div>
-      <textarea class="rmk" placeholder="Remark · નોંધ..." data-form="P" data-qi="14"></textarea>
-    </div></div>
-    <div class="qrow"><div class="qnum">16</div><div class="qbody">
-      <div class="qen">Any other issue not listed above?</div><div class="qgu">અન્ય કોઈ સમસ્યા?</div>
+      <textarea class="rmk" placeholder="નોંધ..." data-form="P" data-qi="14"></textarea>
+    </div>
+    <div class="qrow">
+      <div class="qtxt">૧૬. અન્ય કોઈ સમસ્યા?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="15" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="15" data-val="no">❌ ના</button></div>
-      <textarea class="rmk" placeholder="Describe · વર્ણન..." data-form="P" data-qi="15"></textarea>
-    </div></div>
+      <textarea class="rmk" placeholder="વર્ણન..." data-form="P" data-qi="15"></textarea>
+    </div>
   </div>
+</div>
 
-  <!-- SITE ROOM — Ognaj & Science City only -->
-  <div class="sec" id="site-room-sec" style="display:none">
-    <div class="sec-hdr"><div class="sec-hdr-en">★ SITE ROOM — Ognaj &amp; Science City only</div><div class="sec-hdr-gu">★ સાઇટ રૂમ — Ognaj &amp; Science City</div></div>
-    <div class="qrow"><div class="qnum">17</div><div class="qbody">
-      <div class="qen">Guard present during visit?</div><div class="qgu">ગાર્ડ હાજર?</div>
+<!-- PROP PAGE 3: Site Room (Ognaj & Science City only) -->
+<div class="screen" id="pp3">
+  <div class="info-strip">
+    <div class="info-chip">👤 <strong>Vikram</strong></div>
+    <div class="info-chip" id="p-prop-chip">📍 <strong></strong></div>
+  </div>
+  <div class="sec-card" id="pp3-site-room">
+    <div class="sec-hdr"><span class="sec-hdr-icon">🏠</span><span class="sec-hdr-text">★ સાઇટ રૂમ</span></div>
+    <div class="qrow">
+      <div class="qtxt">૧૭. ગાર્ડ હાજર?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="16" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="16" data-val="no">❌ ના</button></div>
-    </div></div>
-    <div class="qrow"><div class="qnum">18</div><div class="qbody">
-      <div class="qen">Washroom clean and OK?</div><div class="qgu">વૉશરૂમ સ્વચ્છ?</div>
+    </div>
+    <div class="qrow">
+      <div class="qtxt">૧૮. વૉશરૂમ સ્વચ્છ?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="17" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="17" data-val="no">❌ ના</button></div>
-    </div></div>
-    <div class="qrow"><div class="qnum">19</div><div class="qbody">
-      <div class="qen">Lights / fan / electricity working?</div><div class="qgu">લાઈટ / પંખો / વીજળી?</div>
+    </div>
+    <div class="qrow" id="pq18-row">
+      <div class="qtxt">૧૯. લાઈટ / પંખો / વીજળી?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="18" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="18" data-val="no">❌ ના</button></div>
-    </div></div>
-    <div class="qrow"><div class="qnum">20</div><div class="qbody">
-      <div class="qen">Water available?</div><div class="qgu">પાણી ઉપલબ્ધ?</div>
+      <div class="photo-required" id="pq18-photo">📸 ફોટો ફરજિયાત — ખામી હોય ત્યારે ફોટો લો</div>
+    </div>
+    <div class="qrow">
+      <div class="qtxt">૨૦. પાણી ઉપલબ્ધ?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="19" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="19" data-val="no">❌ ના</button></div>
-    </div></div>
-    <div class="qrow"><div class="qnum">21</div><div class="qbody">
-      <div class="qen">Any damage / repair needed?</div><div class="qgu">નુકસાન / રિપેર જરૂરી?</div>
+    </div>
+    <div class="qrow" id="pq20-row">
+      <div class="qtxt">૨૧. નુકસાન / રિપેર જરૂરી?</div>
       <div class="yn"><button class="yn-btn yes" data-form="P" data-qi="20" data-val="yes">✅ હા</button><button class="yn-btn no" data-form="P" data-qi="20" data-val="no">❌ ના</button></div>
-      <textarea class="rmk" placeholder="Describe · વર્ણન..." data-form="P" data-qi="20"></textarea>
-    </div></div>
+      <div class="photo-required" id="pq20-photo">📸 ફોટો ફરજિયાત — નુકસાન હોય ત્યારે ફોટો લો</div>
+      <textarea class="rmk" placeholder="વર્ણન..." data-form="P" data-qi="20"></textarea>
+    </div>
   </div>
+  <div class="sec-card" id="pp3-no-site-room" style="display:none">
+    <div class="sec-hdr"><span class="sec-hdr-icon">ℹ️</span><span class="sec-hdr-text">સાઇટ રૂમ નથી</span></div>
+    <div class="qrow"><div class="qtxt" style="color:var(--muted);">આ પ્રોપર્ટીમાં સાઇટ રૂમ નથી. આગળ વધો.</div></div>
+  </div>
+</div>
 
+<!-- PROP PAGE 4: ફોટો -->
+<div class="screen" id="pp4">
   <div class="photo-card">
-    <h3>📸 ફોટા ઉમેરો · ATTACH PHOTOS</h3>
-    <p>ચારેય ખૂણા, ગેટ, ઘૂસણ / ખામી · 4 corners, gate, encroachment, issues</p>
-    <label class="photo-lbl" for="p-photos">
-      <span class="ic">📷</span>
-      <span>Tap to add photos · ફોટા ઉમેરો</span>
-    </label>
-    <input type="file" id="p-photos" accept="image/*" multiple capture="environment" style="display:none">
-    <div class="thumbs" id="p-thumbs"></div>
-    <div class="photo-note">📌 WhatsApp open થાય ત્યારે ફોટા manually attach કરો · When WhatsApp opens, attach photos manually</div>
+    <div class="photo-card-hdr"><span class="photo-card-hdr-text">📸 ફોટા ઉમેરો</span></div>
+    <div class="photo-body">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:12px;line-height:1.6;">ચારેય ખૂણા, ગેટ, ઘૂસણ, ખામી — બધા ફોટા અહીં ઉમેરો</p>
+      <label class="photo-lbl" for="p-photos">
+        <span class="photo-lbl-icon">📷</span>
+        <span>ફોટા ઉમેરો</span>
+      </label>
+      <input type="file" id="p-photos" accept="image/*" multiple capture="environment" style="display:none">
+      <div class="thumbs" id="p-thumbs"></div>
+      <div class="photo-hint">📌 WhatsApp ખુલે ત્યારે ફોટા manually attach કરો</div>
+    </div>
   </div>
-
-  <div class="send-wrap">
-    <button class="send-btn" id="send-prop-btn">
-      <svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.025.507 3.934 1.395 5.605L0 24l6.545-1.369A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.032-1.384l-.36-.214-3.733.98.998-3.648-.235-.374A9.786 9.786 0 012.182 12C2.182 6.573 6.573 2.182 12 2.182S21.818 6.573 21.818 12 17.427 21.818 12 21.818z"/></svg>
-      Director ને WhatsApp મોકલો
-    </button>
-    <div class="send-hint">WhatsApp ખુલશે — Send બટન દબાવો · WhatsApp will open — press Send</div>
+  <div class="overall-card">
+    <div class="overall-hdr"><div class="overall-hdr-text">📝 એકંદર નોંધ</div></div>
+    <div class="overall-body">
+      <textarea class="rmk" style="min-height:80px;" placeholder="કોઈ વધારાની નોંધ..." data-form="P" data-qi="99"></textarea>
+    </div>
   </div>
+</div>
 
-</div><!-- /screen-prop -->
+<!-- PROP PAGE 5: સારાંશ + Send -->
+<div class="screen" id="pp5">
+  <div id="p-summary-content"></div>
+  <div class="storage-status" id="p-storage-status" style="display:none"></div>
+</div>
 
+<!-- BOTTOM NAV -->
+<div class="nav-wrap" id="nav-wrap">
+  <button class="nav-btn btn-prev" id="btn-prev" style="display:none">← પાછળ</button>
+  <button class="nav-btn btn-next" id="btn-next">આગળ →</button>
+  <button class="nav-btn btn-send" id="btn-send" style="display:none">
+    <svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.025.507 3.934 1.395 5.605L0 24l6.545-1.369A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.032-1.384l-.36-.214-3.733.98.998-3.648-.235-.374A9.786 9.786 0 012.182 12C2.182 6.573 6.573 2.182 12 2.182S21.818 6.573 21.818 12 17.427 21.818 12 21.818z"/></svg>
+    WhatsApp મોકલો
+  </button>
+</div>
 
 <!-- SETTINGS OVERLAY -->
 <div class="overlay" id="overlay">
   <div class="sbox">
     <div class="sbox-hdr">
-      <h2>⚙ SETTINGS</h2>
+      <span class="sbox-title">⚙ સેટિંગ્સ</span>
       <button class="sclose" id="sclose-btn">✕</button>
     </div>
     <div class="sbody">
-      <p>Director નો WhatsApp number એક વખત નાખો.<br>ફોન પર save રહેશે. ફરી નાખવો નહીં.<br><br>Enter Director's WhatsApp number once. Stays saved forever.</p>
-      <div class="cur-num" id="cur-num-display"></div>
-      <span class="slbl">Director's WhatsApp Number</span>
-      <input type="tel" class="sinput" id="wa-input" placeholder="91XXXXXXXXXX" maxlength="15" inputmode="numeric" pattern="[0-9]*">
-      <div class="shint">Country code સાથે · e.g. <strong>919876543210</strong></div>
-      <button class="ssave" id="ssave-btn">✅ SAVE · સેવ કરો</button>
-      <div class="ssaved" id="ssaved">✅ Saved! Number સેવ થઈ ગયો!</div>
+      <p>Director નો WhatsApp number એક વખત નાખો. ફોન પર save રહેશે.</p>
+      <span class="slbl">DIRECTOR નો WHATSAPP NUMBER</span>
+      <input type="tel" class="sinput" id="wa-input" placeholder="91XXXXXXXXXX" maxlength="15" inputmode="numeric">
+      <div class="shint">Country code સાથે · ઉદા: 919876543210</div>
+
+      <span class="slbl" style="margin-top:14px;display:block;">GOOGLE SHEET URL (ડેટા સ્ટોરેજ)</span>
+      <input type="url" class="sinput" style="margin-top:6px;font-size:13px;letter-spacing:0;" id="sheet-url-input" placeholder="https://script.google.com/...">
+      <div class="shint">Google Apps Script Web App URL — નીચે setup ગાઈડ જુઓ</div>
+
+      <button class="ssave" id="ssave-btn">✅ સેવ કરો</button>
+      <div class="ssaved" id="ssaved">✅ સેવ થઈ ગયો!</div>
     </div>
   </div>
 </div>
 
 <script>
-// ── STORAGE (safe wrapper — works even if localStorage blocked) ──
+// ══════════════════════════════════════════════════════════
+// STORAGE
+// ══════════════════════════════════════════════════════════
 const store = {
-  _mem: {},
-  get(k){ try{ return localStorage.getItem(k); }catch(e){ return this._mem[k]||null; } },
-  set(k,v){ try{ localStorage.setItem(k,v); }catch(e){ this._mem[k]=v; } }
+  _m:{},
+  get(k){ try{ return localStorage.getItem(k); }catch(e){ return this._m[k]||null; } },
+  set(k,v){ try{ localStorage.setItem(k,v); }catch(e){ this._m[k]=v; } }
 };
 
-// ── DATA STORES ────────────────────────────────────────────
-const LA = {}; // land answers: qi => {v, r}
-const PA = {}; // prop answers: propIdx+'_'+qi => {v, r}
-let curProp = 0;
+// ══════════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════════
+const LA = {}; // land answers
+const PA = {}; // prop answers
+let curForm = 'land'; // 'land' or 'prop'
+let curPage = 1;      // current page number
+let curProp = 0;      // 0-4
 
 const PROP_NAMES = ['GIFT City','Sargasan','Tarapur','Ognaj','Science City'];
 const PROP_LOCS  = ['Gandhinagar','Gandhinagar','Tarapur','Ahmedabad','Ahmedabad'];
 const SITE_ROOM  = [false,false,false,true,true];
 
+const LAND_PAGES = 5;
+const PROP_PAGES = 5;
+
+const LAND_PAGE_TITLES = ['સીમા & ઘૂસણ','ભૂમિ & એક્સેસ','બોર્ડ & ઉપયોગિતા','ફોટો & નોંધ','સારાંશ'];
+const PROP_PAGE_TITLES = ['સીમા & ભૂમિ','એક્સેસ & ઉપયોગિતા','સાઇટ રૂમ','ફોટો & નોંધ','સારાંશ'];
+
+// Questions for summary/WhatsApp
 const LQ = [
-  'Boundary fences fully secure? · ચારેય ફેન્સ સલામત?',
-  'Anyone shifted fence into our land? · ફેન્સ ખસેડ્યો?',
-  'Gate / entry secure and locked? · ગેટ લૉક?',
-  'Tampering / suspicious activity? · ચેડા?',
-  'Land clean and level? · જમીન સ્વચ્છ?',
-  'New activity / changes on land? · નવો બદલાવ?',
-  'Access from main road OK? · રસ્તો ઠીક?',
-  'Gate / entry in good condition? · ગેટ ઠીક?',
-  'Notice board present? · નોટિસ બોર્ડ?',
-  'All boards clear and good? · બોર્ડ ઠીક?',
-  'Electricity / lighting working? · વીજળી?',
-  'Water available? · પાણી?',
-  'No plumbing / drainage issues? · ડ્રેનેજ ઠીક?',
-  'Washroom clean and usable? · વૉશરૂમ?',
-  'Site clean? · સાઇટ સ્વચ્છ?',
-  'Security guard present? · ગાર્ડ હાજર?',
-  '4-corner + gate photos taken? · ખૂણા ફોટો?',
-  'Issue photos taken? · સમસ્યા ફોટો?',
+  'ચારેય ફેન્સ સલામત?','ફેન્સ ખસેડ્યો?','ગેટ લૉક?','ચેડા?',
+  'જમીન સ્વચ્છ?','નવો બદલાવ?','રસ્તો ઠીક?','ગેટ ઠીક?',
+  'નોટિસ બોર્ડ?','બોર્ડ ઠીક?','વીજળી?','પાણી?',
+  'ડ્રેનેજ ઠીક?','વૉશરૂમ?','સાઇટ સ્વચ્છ?','ગાર્ડ હાજર?',
 ];
-
 const PQ = [
-  '4 boundary fences intact? · ચારેય સીમા ઠીક?',
-  'Encroachment at boundary? · ઘૂસણ?',
-  'Third party using land? · ત્રીજો વ્યક્તિ?',
-  'Fence / compound wall OK? · ફેન્સ ઠીક?',
-  'Digging / damaged ground? · ખોદકામ?',
-  'Waterlogging / gutter / potholes? · પાણી ભરાવ?',
-  'Garbage / waste dumped? · કચરો?',
-  'Access from main road OK? · રસ્તો ઠીક?',
-  'Gate / entry condition OK? · ગેટ ઠીક?',
-  'Notice board present? · નોટિસ બોર્ડ?',
-  'Boards clear and not broken? · બોર્ડ ઠીક?',
-  'Lights working? · લાઈટ ચાલુ?',
-  'Plumbing / drain OK? · ડ્રેઇન ઠીક?',
-  'Fresh water available? · પાણી?',
-  'Security guard present? · ગાર્ડ?',
-  'Any other issue? · અન્ય મુદ્દો?',
-  '[Site Room] Guard present? · ગાર્ડ?',
-  '[Site Room] Washroom clean? · વૉશરૂમ?',
-  '[Site Room] Lights/fan/electricity? · વીજળી?',
-  '[Site Room] Water available? · પાણી?',
-  '[Site Room] Damage/repair needed? · રિપેર?',
+  'ચારેય સીમા ઠીક?','ઘૂસણ?','ત્રીજો વ્યક્તિ?','ફેન્સ ઠીક?',
+  'ખોદકામ?','પાણી ભરાવ?','ગંદકી?','રસ્તો ઠીક?',
+  'ગેટ ઠીક?','નોટિસ બોર્ડ?','બોર્ડ ઠીક?','લાઈટ?',
+  'ડ્રેઇન?','પાણી?','ગાર્ડ?','અન્ય સમસ્યા?',
+  'સ.રૂ. ગાર્ડ?','સ.રૂ. વૉશરૂમ?','સ.રૂ. વીજળી?','સ.રૂ. પાણી?','સ.રૂ. રિપેર?'
 ];
 
-// ── HELPERS ────────────────────────────────────────────────
-function getNum(){ return store.get('karma_wa')||''; }
-function ic(v){ return v==='yes'?'✅':v==='no'?'❌':'⬜'; }
+// Issues that need photos when answered "no" for land, "yes" for encroachment
+const L_PHOTO_ON_NO  = [0,2,4,6,7,10,12]; // highlight red when no
+const L_PHOTO_ON_YES = [1,3,5];            // highlight red when yes
+const P_PHOTO_ON_NO  = [0,3,11,12];
+const P_PHOTO_ON_YES = [1,2,4,5,18,20];
 
-// ── SETTINGS ───────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+// DATE / TIME
+// ══════════════════════════════════════════════════════════
+function fmtDate(d){
+  const days=['રવિ','સોમ','મંગળ','બુધ','ગુરુ','શુક્ર','શનિ'];
+  const months=['જાન','ફેબ','માર','એપ્ર','મે','જૂન','જુલ','ઓગ','સપ્ટ','ઓક્ટ','નવ','ડિસ'];
+  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+function fmtTime(d){
+  let h=d.getHours(),m=d.getMinutes(),ap=h>=12?'PM':'AM';
+  h=h%12||12; return `${h}:${m.toString().padStart(2,'0')} ${ap}`;
+}
+function fmtDateISO(d){ return d.toISOString().split('T')[0]; }
+
+const NOW = new Date();
+const DATE_STR = fmtDate(NOW);
+const TIME_STR = fmtTime(NOW);
+const DATE_ISO = fmtDateISO(NOW);
+
+function fillDateTimeDisplays(){
+  ['l-date-disp','l-date-disp2','l-date-disp3'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.textContent=DATE_STR;
+  });
+  ['l-time-disp','l-time-disp2'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.textContent=TIME_STR;
+  });
+  ['p-date-disp','p-date-disp2'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.textContent=DATE_STR;
+  });
+  const pt=document.getElementById('p-time-disp'); if(pt) pt.textContent=TIME_STR;
+}
+
+// ══════════════════════════════════════════════════════════
+// SETTINGS
+// ══════════════════════════════════════════════════════════
+function getNum(){ return store.get('karma_wa')||''; }
+function getSheetUrl(){ return store.get('karma_sheet_url')||''; }
+
 function openSettings(){
-  const num = getNum();
-  document.getElementById('wa-input').value = num;
-  const disp = document.getElementById('cur-num-display');
-  if(num){ disp.textContent = '📱 Current: +'+num; disp.classList.add('show'); }
-  else { disp.classList.remove('show'); }
-  document.getElementById('ssaved').style.display = 'none';
+  document.getElementById('wa-input').value = getNum();
+  document.getElementById('sheet-url-input').value = getSheetUrl();
+  document.getElementById('ssaved').style.display='none';
   document.getElementById('overlay').classList.add('open');
 }
 function closeSettings(){
   document.getElementById('overlay').classList.remove('open');
   updateBanner();
 }
-function saveNum(){
-  const v = document.getElementById('wa-input').value.trim().replace(/\D/g,'');
-  if(!v||v.length<10){
-    alert('Valid number with country code needed.\nઉદા: 919876543210\n\nExample: 919876543210');
-    return;
-  }
-  store.set('karma_wa', v);
-  document.getElementById('ssaved').style.display = 'block';
-  setTimeout(closeSettings, 1500);
+function saveSettings(){
+  const num = document.getElementById('wa-input').value.trim().replace(/\D/g,'');
+  const url = document.getElementById('sheet-url-input').value.trim();
+  if(!num||num.length<10){ alert('Valid number with country code needed.\nUda: 919876543210'); return; }
+  store.set('karma_wa', num);
+  if(url) store.set('karma_sheet_url', url);
+  document.getElementById('ssaved').style.display='block';
+  setTimeout(closeSettings, 1400);
 }
 function updateBanner(){
   document.getElementById('no-num').classList.toggle('show', !getNum());
 }
 
-// ── FORM SWITCH ────────────────────────────────────────────
-function showForm(f){
-  document.getElementById('screen-land').classList.toggle('show', f==='land');
-  document.getElementById('screen-prop').classList.toggle('show', f==='prop');
-  document.getElementById('prop-bar').classList.toggle('show', f==='prop');
-  document.getElementById('pick-land').classList.toggle('active', f==='land');
-  document.getElementById('pick-prop').classList.toggle('active', f==='prop');
+// ══════════════════════════════════════════════════════════
+// PAGE NAVIGATION
+// ══════════════════════════════════════════════════════════
+function getPageId(){
+  return curForm==='land' ? `lp${curPage}` : `pp${curPage}`;
+}
+function getTotalPages(){
+  return curForm==='land' ? LAND_PAGES : PROP_PAGES;
+}
+
+function showPage(page){
+  const total = getTotalPages();
+  curPage = Math.max(1, Math.min(page, total));
+
+  // Hide all screens
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('show'));
+  document.getElementById(getPageId()).classList.add('show');
+
+  // Update property chip on prop page 3
+  const chip = document.getElementById('p-prop-chip');
+  if(chip) chip.innerHTML = `📍 <strong>${PROP_NAMES[curProp]}</strong>`;
+
+  // Show/hide site room section
+  const sr = document.getElementById('pp3-site-room');
+  const nsr = document.getElementById('pp3-no-site-room');
+  if(sr && nsr){
+    sr.style.display = SITE_ROOM[curProp] ? 'block' : 'none';
+    nsr.style.display = SITE_ROOM[curProp] ? 'none' : 'block';
+  }
+
+  // Build summary on last page
+  if(curPage === total){
+    buildSummary();
+  }
+
+  // Progress
+  const titles = curForm==='land' ? LAND_PAGE_TITLES : PROP_PAGE_TITLES;
+  document.getElementById('prog-title').textContent = titles[curPage-1];
+  document.getElementById('prog-count').textContent = `પૃષ્ઠ ${curPage} / ${total}`;
+  document.getElementById('prog-fill').style.width = `${(curPage/total)*100}%`;
+
+  // Nav buttons
+  document.getElementById('btn-prev').style.display = curPage>1 ? 'flex' : 'none';
+  const isLast = curPage===total;
+  document.getElementById('btn-next').style.display = isLast ? 'none' : 'flex';
+  document.getElementById('btn-send').style.display = isLast ? 'flex' : 'none';
+
   window.scrollTo(0,0);
 }
 
-// ── PROPERTY SWITCH ────────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+// FORM SWITCHING
+// ══════════════════════════════════════════════════════════
+function switchForm(f){
+  curForm = f;
+  curPage = 1;
+  document.getElementById('tab-land').classList.toggle('active', f==='land');
+  document.getElementById('tab-prop').classList.toggle('active', f==='prop');
+  document.getElementById('prop-bar').classList.toggle('show', f==='prop');
+  showPage(1);
+}
+
 function switchProp(idx){
   curProp = parseInt(idx);
-  for(let i=0;i<5;i++){
-    const el = document.getElementById('pi-'+i);
-    if(el) el.style.display = (i===curProp) ? 'block' : 'none';
-  }
-  document.getElementById('site-room-sec').style.display = SITE_ROOM[curProp] ? 'block' : 'none';
-  window.scrollTo(0,0);
+  showPage(curPage);
 }
 
-// ── YES/NO BUTTONS — event delegation ─────────────────────
+// ══════════════════════════════════════════════════════════
+// YES/NO — EVENT DELEGATION
+// ══════════════════════════════════════════════════════════
 document.body.addEventListener('click', function(e){
   const btn = e.target.closest('.yn-btn');
   if(!btn) return;
   const form = btn.dataset.form;
-  const qi   = parseInt(btn.dataset.qi);
-  const val  = btn.dataset.val;
+  const qi = parseInt(btn.dataset.qi);
+  const val = btn.dataset.val;
 
-  // deselect siblings
   btn.closest('.yn').querySelectorAll('.yn-btn').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');
 
   if(form==='L'){
     if(!LA[qi]) LA[qi]={v:'',r:''};
     LA[qi].v = val;
+    // Photo reminder logic
+    const showOnNo = L_PHOTO_ON_NO.includes(qi);
+    const showOnYes = L_PHOTO_ON_YES.includes(qi);
+    const ph = document.getElementById(`lq${qi}-photo`);
+    if(ph){
+      const show = (showOnNo && val==='no') || (showOnYes && val==='yes');
+      ph.classList.toggle('show', show);
+    }
+    const row = document.getElementById(`lq${qi}-row`);
+    if(row) row.classList.toggle('issue-flag', val==='no' && showOnNo || val==='yes' && showOnYes);
   } else {
     const k = curProp+'_'+qi;
     if(!PA[k]) PA[k]={v:'',r:''};
     PA[k].v = val;
+    const showOnNo = P_PHOTO_ON_NO.includes(qi);
+    const showOnYes = P_PHOTO_ON_YES.includes(qi);
+    const ph = document.getElementById(`pq${qi}-photo`);
+    if(ph){
+      const show = (showOnNo && val==='no') || (showOnYes && val==='yes');
+      ph.classList.toggle('show', show);
+    }
+    const row = document.getElementById(`pq${qi}-row`);
+    if(row) row.classList.toggle('issue-flag', (val==='no' && showOnNo) || (val==='yes' && showOnYes));
   }
 });
 
-// ── REMARKS — event delegation ─────────────────────────────
+// REMARKS
 document.body.addEventListener('input', function(e){
   const ta = e.target.closest('textarea.rmk');
-  if(!ta) return;
-  const form = ta.dataset.form;
-  if(!form) return;
+  if(!ta||!ta.dataset.form) return;
   const qi = parseInt(ta.dataset.qi);
   const val = ta.value;
-
-  if(form==='L'){
+  if(ta.dataset.form==='L'){
     if(!LA[qi]) LA[qi]={v:'',r:''};
     LA[qi].r = val;
   } else {
@@ -748,8 +975,10 @@ document.body.addEventListener('input', function(e){
   }
 });
 
-// ── PHOTOS ─────────────────────────────────────────────────
-function setupPhotoInput(inputId, thumbsId){
+// ══════════════════════════════════════════════════════════
+// PHOTOS
+// ══════════════════════════════════════════════════════════
+function setupPhoto(inputId, thumbsId){
   const inp = document.getElementById(inputId);
   if(!inp) return;
   inp.addEventListener('change', function(){
@@ -759,114 +988,209 @@ function setupPhotoInput(inputId, thumbsId){
       const w = document.createElement('div'); w.className='tw';
       const img = document.createElement('img'); img.className='th'; img.src=url;
       const del = document.createElement('button'); del.className='tdel'; del.textContent='✕';
-      del.addEventListener('click', function(e){ e.preventDefault(); w.remove(); });
+      del.addEventListener('click', e=>{ e.preventDefault(); w.remove(); });
       w.appendChild(img); w.appendChild(del);
       prev.appendChild(w);
     });
     this.value='';
   });
 }
-setupPhotoInput('l-photos','l-thumbs');
-setupPhotoInput('p-photos','p-thumbs');
+setupPhoto('l-photos','l-thumbs');
+setupPhoto('p-photos','p-thumbs');
 
-// ── SEND LAND ──────────────────────────────────────────────
-function sendLand(){
-  const num = getNum();
-  if(!num){ alert('Director no number set nathi!\nSettings (gear) kholo.\n\nDirector number not set!\nOpen Settings (gear icon)'); openSettings(); return; }
-
-  const site = document.getElementById('l-site').value||'(blank)';
-  const name = document.getElementById('l-name').value||'(blank)';
-  const date = document.getElementById('l-date').value||'(blank)';
-  const tin  = document.getElementById('l-tin').value||'--';
-  const tout = document.getElementById('l-tout').value||'--';
-  const pc   = document.getElementById('l-thumbs').children.length;
-
-  let msg = `*KARMA - Jamin Nirikshan / Land Inspection*\n`;
-  msg    += `*Site:* ${site}\n`;
-  msg    += `*Officer:* ${name}\n`;
-  msg    += `*Date:* ${date}  Time: ${tin} to ${tout}\n`;
-  msg    += `--------------------\n`;
-  LQ.forEach((q,i)=>{
-    const a = LA[i]||{v:'',r:''};
-    const ans = a.v==='yes' ? '[HA]' : a.v==='no' ? '[NA]' : '[  ]';
-    msg += `${ans} ${i+1}. ${q}\n`;
-    if(a.r) msg += `   Note: ${a.r}\n`;
-  });
-  const overall = LA[99]?LA[99].r:'';
-  if(overall) msg += `\nNote: ${overall}\n`;
-  msg += `--------------------\n`;
-  msg += `Photos: ${pc} (attach in this chat)\n`;
-  msg += `_KARMA App_`;
-
-  window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank');
+// ══════════════════════════════════════════════════════════
+// SUMMARY BUILDER
+// ══════════════════════════════════════════════════════════
+function buildSummary(){
+  if(curForm==='land') buildLandSummary();
+  else buildPropSummary();
 }
 
-// ── SEND PROPERTY ──────────────────────────────────────────
-function sendProp(){
-  const num = getNum();
-  if(!num){ alert('Director no number set nathi!\nSettings (gear) kholo.\n\nDirector number not set!\nOpen Settings (gear icon)'); openSettings(); return; }
+function ansHtml(v){
+  if(v==='yes') return '<span class="summary-a yes">હા ✅</span>';
+  if(v==='no')  return '<span class="summary-a no">ના ❌</span>';
+  return '<span class="summary-a blank">—</span>';
+}
 
-  const pi   = curProp;
-  const name = document.getElementById(`p${pi}-name`).value||'(blank)';
-  const date = document.getElementById(`p${pi}-date`).value||'(blank)';
-  const time = document.getElementById(`p${pi}-time`).value||'--';
-  const pc   = document.getElementById('p-thumbs').children.length;
+function buildLandSummary(){
+  const el = document.getElementById('l-summary-content');
+  let issues = [];
+  LQ.forEach((q,i)=>{ const a=LA[i]; if(a&&a.v==='no') issues.push(q); });
+  if(LA[1]&&LA[1].v==='yes') issues.push(LQ[1]);
 
-  let msg = `*KARMA - Property Nirikshan / Property Inspection*\n`;
-  msg    += `*Property:* ${PROP_NAMES[pi]} (${PROP_LOCS[pi]})\n`;
-  msg    += `*Officer:* ${name}\n`;
-  msg    += `*Date:* ${date}  Time: ${time}\n`;
-  msg    += `--------------------\n`;
+  let html = `
+    <div class="summary-card">
+      <div class="summary-hdr"><div class="summary-hdr-text">📋 નિરીક્ષણ સારાંશ — જમીન</div></div>
+      <div class="summary-row"><span class="summary-q">👤 Officer</span><span class="summary-a">Vikram</span></div>
+      <div class="summary-row"><span class="summary-q">📅 તારીખ</span><span class="summary-a">${DATE_STR}</span></div>
+      <div class="summary-row"><span class="summary-q">⏰ સમય</span><span class="summary-a">${TIME_STR}</span></div>
+    </div>`;
 
-  const maxQ = SITE_ROOM[pi] ? 21 : 16;
-  for(let q=0;q<maxQ;q++){
-    const k = pi+'_'+q;
-    const a = PA[k]||{v:'',r:''};
-    const ans = a.v==='yes' ? '[HA]' : a.v==='no' ? '[NA]' : '[  ]';
-    msg += `${ans} ${q+1}. ${PQ[q]}\n`;
-    if(a.r) msg += `   Note: ${a.r}\n`;
+  // Issues highlight
+  if(issues.length>0){
+    html += `<div class="summary-card"><div class="summary-hdr" style="background:var(--red)"><div class="summary-hdr-text">⚠️ ${issues.length} સમસ્યા મળી</div></div>`;
+    issues.forEach(q=>{ html+=`<div class="summary-row"><span class="summary-q" style="color:var(--red);font-weight:600;">❌ ${q}</span></div>`; });
+    html+=`</div>`;
+  } else {
+    html+=`<div class="summary-card"><div class="summary-hdr" style="background:var(--green)"><div class="summary-hdr-text">✅ બધું ઠીક — કોઈ સમસ્યા નથી</div></div></div>`;
   }
 
-  msg += `--------------------\n`;
-  msg += `Photos: ${pc} (attach in this chat)\n`;
-  msg += `_KARMA App_`;
-
-  window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank');
+  html += `<div class="summary-card"><div class="summary-hdr"><div class="summary-hdr-text">તમામ જવાબ</div></div>`;
+  LQ.forEach((q,i)=>{ const a=LA[i]||{v:''}; html+=`<div class="summary-row"><span class="summary-q">${q}</span>${ansHtml(a.v)}</div>`; });
+  html+=`</div>`;
+  el.innerHTML = html;
 }
 
-// ── WIRE UP ALL BUTTONS WITH addEventListener ──────────────
+function buildPropSummary(){
+  const el = document.getElementById('p-summary-content');
+  let issues = [];
+  const maxQ = SITE_ROOM[curProp] ? 21 : 16;
+  for(let i=0;i<maxQ;i++){
+    const k=curProp+'_'+i; const a=PA[k];
+    if(a&&a.v==='no') issues.push(PQ[i]);
+    if(a&&a.v==='yes'&&[1,2,4,5].includes(i)) issues.push(PQ[i]);
+  }
+
+  let html = `
+    <div class="summary-card">
+      <div class="summary-hdr"><div class="summary-hdr-text">📋 નિરીક્ષણ સારાંશ — ${PROP_NAMES[curProp]}</div></div>
+      <div class="summary-row"><span class="summary-q">👤 Officer</span><span class="summary-a">Vikram</span></div>
+      <div class="summary-row"><span class="summary-q">📅 તારીખ</span><span class="summary-a">${DATE_STR}</span></div>
+      <div class="summary-row"><span class="summary-q">📍 પ્રોપર્ટી</span><span class="summary-a">${PROP_NAMES[curProp]}</span></div>
+    </div>`;
+
+  if(issues.length>0){
+    html+=`<div class="summary-card"><div class="summary-hdr" style="background:var(--red)"><div class="summary-hdr-text">⚠️ ${issues.length} સમસ્યા મળી</div></div>`;
+    issues.forEach(q=>{ html+=`<div class="summary-row"><span class="summary-q" style="color:var(--red);font-weight:600;">❌ ${q}</span></div>`; });
+    html+=`</div>`;
+  } else {
+    html+=`<div class="summary-card"><div class="summary-hdr" style="background:var(--green)"><div class="summary-hdr-text">✅ બધું ઠીક — કોઈ સમસ્યા નથી</div></div></div>`;
+  }
+
+  html+=`<div class="summary-card"><div class="summary-hdr"><div class="summary-hdr-text">તમામ જવાબ</div></div>`;
+  for(let i=0;i<maxQ;i++){
+    const k=curProp+'_'+i; const a=PA[k]||{v:''};
+    html+=`<div class="summary-row"><span class="summary-q">${PQ[i]}</span>${ansHtml(a.v)}</div>`;
+  }
+  html+=`</div>`;
+  el.innerHTML = html;
+}
+
+// ══════════════════════════════════════════════════════════
+// GOOGLE SHEET STORAGE
+// ══════════════════════════════════════════════════════════
+async function saveToSheet(data){
+  const url = getSheetUrl();
+  if(!url) return false;
+  try {
+    await fetch(url, {
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(data)
+    });
+    return true;
+  } catch(e){
+    return false;
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+// SEND
+// ══════════════════════════════════════════════════════════
+async function doSend(){
+  const num = getNum();
+  if(!num){ alert('Director no number set nathi!\nSettings kholo.'); openSettings(); return; }
+
+  const btn = document.getElementById('btn-send');
+  btn.textContent='મોકલી રહ્યા છે...';
+  btn.disabled=true;
+
+  // Save to sheet
+  let sheetData;
+  if(curForm==='land'){
+    sheetData = { type:'land', officer:'Vikram', date:DATE_ISO, time:TIME_STR, answers: LA };
+  } else {
+    sheetData = { type:'property', property:PROP_NAMES[curProp], officer:'Vikram', date:DATE_ISO, time:TIME_STR, answers: PA };
+  }
+
+  const saved = await saveToSheet(sheetData);
+  const statusEl = document.getElementById(curForm==='land'?'l-storage-status':'p-storage-status');
+  if(statusEl){
+    statusEl.style.display='flex';
+    if(saved){
+      statusEl.className='storage-status';
+      statusEl.textContent='✅ Google Sheet માં સેવ થઈ ગયો';
+    } else if(getSheetUrl()){
+      statusEl.className='storage-status error';
+      statusEl.textContent='⚠️ Sheet સેવ નથી થઈ — WhatsApp તો જશે';
+    }
+  }
+
+  // Build WhatsApp message
+  let msg = '';
+  if(curForm==='land'){
+    const pc = document.getElementById('l-thumbs').children.length;
+    const overall = LA[99]?LA[99].r:'';
+    msg = `*KARMA - Jamin Nirikshan*\n`;
+    msg += `*Officer:* Vikram\n*Date:* ${DATE_STR}  Time: ${TIME_STR}\n`;
+    msg += `--------------------\n`;
+    LQ.forEach((q,i)=>{
+      const a=LA[i]||{v:'',r:''};
+      const ans=a.v==='yes'?'[HA]':a.v==='no'?'[NA]':'[  ]';
+      msg+=`${ans} ${i+1}. ${q}\n`;
+      if(a.r) msg+=`   Note: ${a.r}\n`;
+    });
+    if(overall) msg+=`\nNote: ${overall}\n`;
+    msg+=`--------------------\nPhotos: ${pc}\n_KARMA App_`;
+  } else {
+    const pc = document.getElementById('p-thumbs').children.length;
+    const overall = PA[curProp+'_99'] ? PA[curProp+'_99'].r : (LA[99]?LA[99].r:'');
+    const maxQ = SITE_ROOM[curProp]?21:16;
+    msg = `*KARMA - Property Nirikshan*\n`;
+    msg += `*Property:* ${PROP_NAMES[curProp]} (${PROP_LOCS[curProp]})\n`;
+    msg += `*Officer:* Vikram\n*Date:* ${DATE_STR}  Time: ${TIME_STR}\n`;
+    msg += `--------------------\n`;
+    for(let i=0;i<maxQ;i++){
+      const k=curProp+'_'+i; const a=PA[k]||{v:'',r:''};
+      const ans=a.v==='yes'?'[HA]':a.v==='no'?'[NA]':'[  ]';
+      msg+=`${ans} ${i+1}. ${PQ[i]}\n`;
+      if(a.r) msg+=`   Note: ${a.r}\n`;
+    }
+    msg+=`--------------------\nPhotos: ${pc}\n_KARMA App_`;
+  }
+
+  setTimeout(()=>{
+    window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank');
+    btn.innerHTML=`<svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.025.507 3.934 1.395 5.605L0 24l6.545-1.369A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.032-1.384l-.36-.214-3.733.98.998-3.648-.235-.374A9.786 9.786 0 012.182 12C2.182 6.573 6.573 2.182 12 2.182S21.818 6.573 21.818 12 17.427 21.818 12 21.818z"/></svg> WhatsApp મોકલો`;
+    btn.disabled=false;
+  }, 800);
+}
+
+// ══════════════════════════════════════════════════════════
+// EVENT LISTENERS
+// ══════════════════════════════════════════════════════════
 document.getElementById('gear-btn').addEventListener('click', openSettings);
 document.getElementById('sclose-btn').addEventListener('click', closeSettings);
-document.getElementById('ssave-btn').addEventListener('click', saveNum);
-document.getElementById('send-land-btn').addEventListener('click', sendLand);
-document.getElementById('send-prop-btn').addEventListener('click', sendProp);
+document.getElementById('ssave-btn').addEventListener('click', saveSettings);
 document.getElementById('no-num').addEventListener('click', openSettings);
+document.getElementById('overlay').addEventListener('click', e=>{ if(e.target===document.getElementById('overlay')) closeSettings(); });
 
-document.getElementById('pick-land').addEventListener('click', function(){ showForm('land'); });
-document.getElementById('pick-prop').addEventListener('click', function(){ showForm('prop'); });
-
+document.getElementById('tab-land').addEventListener('click', ()=>switchForm('land'));
+document.getElementById('tab-prop').addEventListener('click', ()=>switchForm('prop'));
 document.getElementById('prop-sel').addEventListener('change', function(){ switchProp(this.value); });
 
-// Close overlay on background tap
-document.getElementById('overlay').addEventListener('click', function(e){
-  if(e.target === this) closeSettings();
-});
+document.getElementById('btn-prev').addEventListener('click', ()=>showPage(curPage-1));
+document.getElementById('btn-next').addEventListener('click', ()=>showPage(curPage+1));
+document.getElementById('btn-send').addEventListener('click', doSend);
 
-// ── INIT ───────────────────────────────────────────────────
-(function init(){
-  const today = new Date().toISOString().split('T')[0];
-  const ldate = document.getElementById('l-date');
-  if(ldate) ldate.value = today;
-  for(let i=0;i<5;i++){
-    const el = document.getElementById(`p${i}-date`);
-    if(el) el.value = today;
-  }
-  updateBanner();
-  // Only show settings if no number saved — with a small delay
-  if(!getNum()){
-    setTimeout(openSettings, 800);
-  }
-})();
+// ══════════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════════
+fillDateTimeDisplays();
+updateBanner();
+showPage(1);
+if(!getNum()) setTimeout(openSettings, 700);
 </script>
 </body>
 </html>
