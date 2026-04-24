@@ -727,7 +727,9 @@ function fillDT(){
 
 // ── SETTINGS ─────────────────────────────────────────────
 const getNum=()=>S.get('kwa')||'';
-const getGS=()=>S.get('kgs')||'';
+// HARDCODED Apps Script URL — paste yours once, re-upload to GitHub, done forever
+const HARDCODED_GS_URL = ''; https://script.google.com/macros/s/AKfycbwOYF7adnzS3Ov8D-ZO2QHiL7CSz-nHIfZr4A2acRfgzzH3VymOZ12Ldu5CMT5CyPCO/exec'
+const getGS=()=>HARDCODED_GS_URL || S.get('kgs') || '';
 function openS(){document.getElementById('wa-inp').value=getNum();document.getElementById('gs-inp').value=getGS();document.getElementById('ssaved').style.display='none';document.getElementById('overlay').classList.add('open');}
 function closeS(){document.getElementById('overlay').classList.remove('open');updateBanner();}
 function saveS(){
